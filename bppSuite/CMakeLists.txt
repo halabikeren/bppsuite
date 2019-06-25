@@ -20,6 +20,8 @@ add_executable (bppalnscore bppAlnScore.cpp)
 add_executable (bpppopstats bppPopStats.cpp)
 add_executable (relax RELAX.cpp)
 add_executable (relaxsimulator RELAXSimulator.cpp)
+add_executable (traitrelax TraitRELAX.cpp)
+add_executable (traitsimulator TraitSimulator.cpp)
 
 set (bppsuite-targets
   bppml
@@ -36,6 +38,8 @@ set (bppsuite-targets
   bpppopstats
   relax
   relaxsimulator
+  traitrelax
+  traitsimulator
   )
 
 foreach (target ${bppsuite-targets})
