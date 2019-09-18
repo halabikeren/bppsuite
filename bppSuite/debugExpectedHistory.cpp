@@ -378,7 +378,7 @@ int main(int args, char** argv)
     myfile.close();
     ApplicationTools::displayResult("Joint model log likelihood: ", TextTools::toString(((-1*charTl->getValue()) + (-1*seqTl->getValue())), 15));
             
-    // now, conduct stablity Analysis for the sampling based ikelihood computation
+    // now, conduct stablity Analysis for the sampling based likelihood computation
     string filepPath = debugDir + "sampling_expected_history_approach_logl_stability.txt";
     ofstream myfie (filepPath);
     if (myfile.is_open())

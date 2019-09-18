@@ -24,6 +24,8 @@ add_executable (traitrelax TraitRELAX.cpp)
 add_executable (traitsimulator TraitSimulator.cpp)
 add_executable (writemphistory writeMpHistory.cpp)
 add_executable (debugexpectedhistory debugExpectedHistory.cpp)
+add_executable (computeRELAXsurface computeRELAXLoglSurface.cpp)
+add_executable (debugNonHomogenous testNonHomogenousLoglComputation.cpp)
 
 set (bppsuite-targets
   bppml
@@ -44,6 +46,8 @@ set (bppsuite-targets
   traitsimulator
   writemphistory
   debugexpectedhistory
+  computeRELAXsurface
+  debugNonHomogenous
   )
 
 foreach (target ${bppsuite-targets})
