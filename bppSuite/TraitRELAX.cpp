@@ -505,7 +505,8 @@ int main(int args, char **argv)
     /* set the joint likelihood function instance */
     DiscreteDistribution *rDist = new ConstantRateDistribution();
 
-    JointLikelihoodFunction *traitRELAXLikelihoodFunction = new JointLikelihoodFunction(&traitRELAX, tree, charData, charModel, seqData, seqModel, rDist);
+    bool debug = ApplicationTools::getStringParameter("joint.likelihood.debug", bppml->getParams(), false, "", true, 1);
+    JointLikelihoodFunction *traitRELAXLikelihoodFunction = new JointLikelihoodFunction(&traitRELAX, tree, charData, charModel, seqData, seqModel, rDist, debug);
     cout << "\n**** Initial parameters ****" << endl;
     map<string, double> userInitialValues = traitRELAXLikelihoodFunction->getModelParameters();
     ParameterList emptyParametersList;
