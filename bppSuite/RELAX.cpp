@@ -185,6 +185,7 @@ int main(int args, char** argv)
     /* fit the null */
     cout << "\nFitting the null model" << endl;
     bppml.startTimer();
+    OptimizationTools::optimizeTreeScale(tl, 0.000001, 1000000, ApplicationTools::message.get(), ApplicationTools::message.get(), 0);
     bppml.getParam("optimization.ignore_parameters") = "BrLen,RELAX.k_1,RELAX.k_2";
     PhylogeneticsApplicationTools::optimizeParameters(tl, tl->getParameters(), bppml.getParams());
     double nullLogl = -tl->getValue();
@@ -197,7 +198,8 @@ int main(int args, char** argv)
     model->getModel(1)->setParameterValue("k", userInitialValue);
     cout << "\nFitting the alternative model" << endl;
     bppml.startTimer();
-    bppml.getParam("optimization.ignore_parameters") = "BrLen,RELAX.k_1,RELAX.1_Full.theta_1,RELAX.1_Full.theta1_1,RELAX.1_Full.theta2_1,RELAX.2_Full.theta_1,RELAX.2_Full.theta1_1,RELAX.2_Full.theta2_1,RELAX.3_Full.theta_1,RELAX.3_Full.theta1_1,RELAX.3_Full.theta2_1"; // ignore frequency parameters to reduce optimization duration - results in one unit of ll reduction in optimality and 1 minutre reduction in duration
+	OptimizationTools::optimizeTreeScale(tl, 0.000001, 1000000, ApplicationTools::message.get(), ApplicationTools::message.get(), 0);
+    bppml.getParam("optimization.ignore_parameters") = "BrLen,RELAX.k_1"; //,RELAX.1_Full.theta_1,RELAX.1_Full.theta1_1,RELAX.1_Full.theta2_1,RELAX.2_Full.theta_1,RELAX.2_Full.theta1_1,RELAX.2_Full.theta2_1,RELAX.3_Full.theta_1,RELAX.3_Full.theta1_1,RELAX.3_Full.theta2_1"; // ignore frequency parameters to reduce optimization duration - results in one unit of ll reduction in optimality and 1 minutre reduction in duration
     PhylogeneticsApplicationTools::optimizeParameters(tl, tl->getParameters(), bppml.getParams());
     double alternativeLogl = -tl->getValue();
     ApplicationTools::displayResult("Log likelihood", TextTools::toString(alternativeLogl, 15));
