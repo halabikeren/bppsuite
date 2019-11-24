@@ -476,6 +476,11 @@ int main(int args, char **argv)
 
   try
   {
+	  
+	// set random seed
+	double seed = RandomTools::giveRandomNumberBetweenZeroAndEntry(1.0);
+	cout << "seed=" << seed << endl;
+	RandomTools::setSeed(static_cast<long>(seed));
 
     /* process input from params file */
     BppApplication traitRELAX(args, argv, "traitRELAX");
@@ -659,9 +664,9 @@ int main(int args, char **argv)
 
     vector<double> altLoglBySite = traitRELAXLikelihoodFunction->getLikelihoodForEachSite();
 
-    cout << "Computing log likelihood ratio by site" << endl;
+    cout << "\n\nJoint log likelihood ratio by site" << endl;
     double logLR;
-    cout << "site\tlog(LR)" << endl;
+    cout << "\nsite\tlog(LR)" << endl;
     for (size_t s=0; s<altLoglBySite.size(); ++s)
     {
         logLR = altLoglBySite[s] / nullLoglBySite[s];
