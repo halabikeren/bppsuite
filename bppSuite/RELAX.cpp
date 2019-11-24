@@ -17,6 +17,7 @@ using namespace std;
 #include <Bpp/Io/FileTools.h>
 #include <Bpp/Text/TextTools.h>
 #include <Bpp/Text/KeyvalTools.h>
+#include <Bpp/Numeric/Random/RandomTools.h>
 
 // From bpp-seq:
 #include <Bpp/Seq/Alphabet/Alphabet.h>
@@ -122,6 +123,23 @@ MixedSubstitutionModelSet* setRELAXModel(BppApplication* bppml, const VectorSite
     return modelSet;
 }
 
+void reportScalingFactor(TreeLikelihood* tl, double origTreeLength)
+{
+    const Tree& tree = tl->getTree();
+    vector <const Node*> nodes = (dynamic_cast<const TreeTemplate<Node>&>(tree)).getNodes();
+    double treeSize = 0;
+    for (size_t b=0; b<nodes.size(); ++b)
+    {
+        if (nodes[b]->getId() != tree.getRootId())
+
+        {
+            treeSize = treeSize + nodes[b]->getDistanceToFather();
+        }
+    }
+    double scalingFactor = treeSize / origTreeLength;
+    cout << "The tree has been scaled by a sequence scaling factor of: " << scalingFactor << endl;
+}
+
 
 /******************************************************************************/
 /*********************************** Main *************************************/
@@ -136,6 +154,11 @@ int main(int args, char** argv)
 
   try
   { 
+  
+	// set random seed
+	double seed = RandomTools::giveRandomNumberBetweenZeroAndEntry(1.0);
+	cout << "seed=" << seed << endl;
+	RandomTools::setSeed(static_cast<long>(seed));
 
     // process input from params file
     BppApplication bppml(args, argv, "bppML");
@@ -157,6 +180,7 @@ int main(int args, char** argv)
 
     /* process tree */
     Tree* tree = process_tree(bppml);
+	double origTreeLength = tree->getTotalLength();
   
     /* set a branch site model */
     MixedSubstitutionModelSet* model = setRELAXModel(&bppml, sites, codonAlphabet, tree);
@@ -186,7 +210,8 @@ int main(int args, char** argv)
     cout << "\nFitting the null model" << endl;
     bppml.startTimer();
     OptimizationTools::optimizeTreeScale(tl, 0.000001, 1000000, ApplicationTools::message.get(), ApplicationTools::message.get(), 0);
-    bppml.getParam("optimization.ignore_parameters") = "BrLen,RELAX.k_1,RELAX.k_2";
+    reportScalingFactor(tl, origTreeLength);
+	bppml.getParam("optimization.ignore_parameters") = "BrLen,RELAX.k_1,RELAX.k_2";
     PhylogeneticsApplicationTools::optimizeParameters(tl, tl->getParameters(), bppml.getParams());
     double nullLogl = -tl->getValue();
     ApplicationTools::displayResult("Log likelihood", TextTools::toString(nullLogl, 15));
@@ -199,7 +224,8 @@ int main(int args, char** argv)
     cout << "\nFitting the alternative model" << endl;
     bppml.startTimer();
 	OptimizationTools::optimizeTreeScale(tl, 0.000001, 1000000, ApplicationTools::message.get(), ApplicationTools::message.get(), 0);
-    bppml.getParam("optimization.ignore_parameters") = "BrLen,RELAX.k_1"; //,RELAX.1_Full.theta_1,RELAX.1_Full.theta1_1,RELAX.1_Full.theta2_1,RELAX.2_Full.theta_1,RELAX.2_Full.theta1_1,RELAX.2_Full.theta2_1,RELAX.3_Full.theta_1,RELAX.3_Full.theta1_1,RELAX.3_Full.theta2_1"; // ignore frequency parameters to reduce optimization duration - results in one unit of ll reduction in optimality and 1 minutre reduction in duration
+    reportScalingFactor(tl, origTreeLength);
+	bppml.getParam("optimization.ignore_parameters") = "BrLen,RELAX.k_1"; //,RELAX.1_Full.theta_1,RELAX.1_Full.theta1_1,RELAX.1_Full.theta2_1,RELAX.2_Full.theta_1,RELAX.2_Full.theta1_1,RELAX.2_Full.theta2_1,RELAX.3_Full.theta_1,RELAX.3_Full.theta1_1,RELAX.3_Full.theta2_1"; // ignore frequency parameters to reduce optimization duration - results in one unit of ll reduction in optimality and 1 minutre reduction in duration
     PhylogeneticsApplicationTools::optimizeParameters(tl, tl->getParameters(), bppml.getParams());
     double alternativeLogl = -tl->getValue();
     ApplicationTools::displayResult("Log likelihood", TextTools::toString(alternativeLogl, 15));
