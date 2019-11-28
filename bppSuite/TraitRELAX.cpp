@@ -163,8 +163,7 @@ TransitionModel *setCharacterModel(BppApplication *bppml, VectorSiteContainer *c
   {
     // set the value of mu to be the middle of the interval
     model->setParameterValue(string("mu"), (characterMuLb + characterMuUb) / 2);
-    dynamic_cast<TwoParameterBinarySubstitutionModel *>(model)->setMuBounds(characterMuLb, characterMuUb);
-    // estimate the initial frequencies as observedPseudoCount with pseudocount as 1 to avoid possible case of frequency = 0
+	// estimate the initial frequencies as observedPseudoCount with pseudocount as 1 to avoid possible case of frequency = 0
     model->setFreqFromData(dynamic_cast<const SequenceContainer &>(*charData), 1); // the second arguemnt stands for pesudocount 1
   }
   else
@@ -179,7 +178,11 @@ TransitionModel *setCharacterModel(BppApplication *bppml, VectorSiteContainer *c
     {
       dynamic_cast<TwoParameterBinarySubstitutionModel *>(model)->setMuBounds(characterMuLb, mu + 0.001);
     }
-    double pi0 = ApplicationTools::getDoubleParameter("character_model.pi0", bppml->getParams(), 0.5);
+	else
+	{
+		dynamic_cast<TwoParameterBinarySubstitutionModel *>(model)->setMuBounds(characterMuLb, characterMuUb);
+	}
+	double pi0 = ApplicationTools::getDoubleParameter("character_model.pi0", bppml->getParams(), 0.5);
     map<int, double> frequencies;
     frequencies[0] = pi0;
     frequencies[1] = 1 - pi0;
