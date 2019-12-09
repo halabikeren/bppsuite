@@ -528,10 +528,10 @@ int main(int args, char **argv)
     traitRELAX.done();
 
     /* report the log likelihood of the null model */
-    cout << "\n**** Null model after optimization ****\n"
-         << endl;
+    cout << "\n**** Null model after optimization ****\n" << endl;
     traitRELAXLikelihoodFunction->getModelParameters();
     vector<double> nullLoglBySite = traitRELAXLikelihoodFunction->getLikelihoodForEachSite();
+    double nullLogl = -1* traitRELAXLikelihoodFunction->getValue();
 
     /* fit the alternative model: sequencial optimization of the character model and then sequence model, given an expected history based on the character model */
     cout << "\n**** Alternative model fitting ****" << endl;
@@ -666,6 +666,19 @@ int main(int args, char **argv)
     ApplicationTools::displayResult("Number of optimization cycles", TextTools::toString(optimizationCyclesNum));
 
     vector<double> altLoglBySite = traitRELAXLikelihoodFunction->getLikelihoodForEachSite();
+    double alternativeLogl = -1 * traitRELAXLikelihoodFunction->getValue();
+
+    // conduct likelihood ratio test
+    double LRTStatistic = 2*(alternativeLogl - nullLogl);
+    if (LRTStatistic > 3.84)
+    {
+      cout << "Null hypothesis rejected with selection intensity k = " << bestModelParameters["RELAX.k_2"] << endl;
+    }
+    else
+    {
+      cout << "Null hypothesis non rejected rejected" << endl;
+    }
+    
 
     cout << "\n\nJoint log likelihood ratio by site" << endl;
     double logLR;
