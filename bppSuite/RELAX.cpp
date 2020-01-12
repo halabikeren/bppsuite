@@ -57,8 +57,26 @@ using namespace std;
 /**************************** Auxiliary functions *****************************/
 /******************************************************************************/
 
+void reportScalingFactor(TreeLikelihood* tl, double origTreeLength)
+{
+    const Tree& tree = tl->getTree();
+    vector <const Node*> nodes = (dynamic_cast<const TreeTemplate<Node>&>(tree)).getNodes();
+    double treeSize = 0;
+    for (size_t b=0; b<nodes.size(); ++b)
+    {
+        if (nodes[b]->getId() != tree.getRootId())
 
-void printModelParameters(DiscreteRatesAcrossSitesTreeLikelihood* tl, MixedSubstitutionModelSet* modelSet)
+        {
+            treeSize = treeSize + nodes[b]->getDistanceToFather();
+        }
+    }
+	cout << "\n\norigTreeLength: " << origTreeLength << endl; // debug
+	cout << "treeSize: " << treeSize << endl; // debug
+    double scalingFactor = treeSize / origTreeLength;
+    cout << "The tree has been scaled by a sequence scaling factor of: " << scalingFactor << endl;
+}
+
+void printModelParameters(DiscreteRatesAcrossSitesTreeLikelihood* tl, MixedSubstitutionModelSet* modelSet, double origTreeLength)
 {
   ParameterList parameters;
   for (size_t m = 0; m < modelSet->getNumberOfModels(); ++m) {
@@ -75,6 +93,8 @@ void printModelParameters(DiscreteRatesAcrossSitesTreeLikelihood* tl, MixedSubst
   {
     ApplicationTools::displayResult(parameters[i].getName(), TextTools::toString(parameters[i].getValue()));
   }
+  
+  reportScalingFactor(tl, origTreeLength);
 }
 
 VectorSiteContainer* process_alignment(Alphabet* alphabet, BppApplication bppml)
@@ -123,24 +143,6 @@ MixedSubstitutionModelSet* setRELAXModel(BppApplication* bppml, const VectorSite
     return modelSet;
 }
 
-void reportScalingFactor(TreeLikelihood* tl, double origTreeLength)
-{
-    const Tree& tree = tl->getTree();
-    vector <const Node*> nodes = (dynamic_cast<const TreeTemplate<Node>&>(tree)).getNodes();
-    double treeSize = 0;
-    for (size_t b=0; b<nodes.size(); ++b)
-    {
-        if (nodes[b]->getId() != tree.getRootId())
-
-        {
-            treeSize = treeSize + nodes[b]->getDistanceToFather();
-        }
-    }
-    double scalingFactor = treeSize / origTreeLength;
-    cout << "The tree has been scaled by a sequence scaling factor of: " << scalingFactor << endl;
-}
-
-
 /******************************************************************************/
 /*********************************** Main *************************************/
 /******************************************************************************/
@@ -155,13 +157,20 @@ int main(int args, char** argv)
   try
   { 
   
-	// set random seed
-	double seed = RandomTools::giveRandomNumberBetweenZeroAndEntry(1.0);
-	cout << "seed=" << seed << endl;
-	RandomTools::setSeed(static_cast<long>(seed));
-
     // process input from params file
     BppApplication bppml(args, argv, "bppML");
+	
+	// set random seed
+	// process seed from parameter file, if exists
+	double seed;
+	seed = ApplicationTools::getDoubleParameter("seed", bppml.getParams(), 1);
+	if (seed == 1)
+	{
+		// else, choose a ransom seed
+		seed = RandomTools::giveRandomNumberBetweenZeroAndEntry(1.0);
+	}
+	cout << "seed=" << seed << endl;
+	RandomTools::setSeed(static_cast<long>(seed));
 
     map<string,string> parans = bppml.getParams(); // debug
 
@@ -203,37 +212,68 @@ int main(int args, char** argv)
     /* compute likelihood */
     cout << "\nComputing intial log likelihood" << endl;
     ApplicationTools::displayResult("Log likelihood", TextTools::toString(-tl->getValue(), 15));
-    printModelParameters(tl, model); // debug - print model parameters
+    printModelParameters(tl, model, origTreeLength); // debug - print model parameters
     bppml.done();
 
     /* fit the null */
     cout << "\nFitting the null model" << endl;
     bppml.startTimer();
-    OptimizationTools::optimizeTreeScale(tl, 0.000001, 1000000, ApplicationTools::message.get(), ApplicationTools::message.get(), 0);
-    reportScalingFactor(tl, origTreeLength);
 	bppml.getParam("optimization.ignore_parameters") = "BrLen,RELAX.k_1,RELAX.k_2";
-    PhylogeneticsApplicationTools::optimizeParameters(tl, tl->getParameters(), bppml.getParams());
-    double nullLogl = -tl->getValue();
-    ApplicationTools::displayResult("Log likelihood", TextTools::toString(nullLogl, 15));
-    printModelParameters(tl, model); // debug - print model parameters
+	int scaleTree = ApplicationTools::getIntParameter("optimization.scale.tree", bppml.getParams(), 0);
+	double prevLogLikelihood = -tl->getValue();
+	double currLogLikelihood = -tl->getValue();
+	size_t index = 1;
+	do
+	{
+		cout << "Optimization cycle: " << TextTools::toString(index) << endl;
+		index = index + 1;
+		if (scaleTree >= 1)
+		{
+			OptimizationTools::optimizeTreeScale(tl, 0.000001, 1000000, ApplicationTools::message.get(), ApplicationTools::message.get(), 0);
+		}
+		reportScalingFactor(tl, origTreeLength);
+		PhylogeneticsApplicationTools::optimizeParameters(tl, tl->getParameters(), bppml.getParams());
+		printModelParameters(tl, model, origTreeLength); // debug - print model parameters
+		ApplicationTools::displayResult("Current log likelihood", TextTools::toString(-tl->getValue(), 15));
+		prevLogLikelihood = currLogLikelihood;
+		currLogLikelihood = -tl->getValue();
+		ApplicationTools::displayResult("Current diff", TextTools::toString((currLogLikelihood-prevLogLikelihood), 15));
+	} while (currLogLikelihood - prevLogLikelihood > 0.01);
+	double nullLogl = currLogLikelihood;
+	cout << "iteraive optimzation complete" << endl;
+	ApplicationTools::displayResult("Log likelihood", TextTools::toString(nullLogl, 15));
     bppml.done();
 
     /* fit the alternative */
     // set the initial value of k
     model->getModel(1)->setParameterValue("k", userInitialValue);
     cout << "\nFitting the alternative model" << endl;
-    bppml.startTimer();
-	OptimizationTools::optimizeTreeScale(tl, 0.000001, 1000000, ApplicationTools::message.get(), ApplicationTools::message.get(), 0);
-    reportScalingFactor(tl, origTreeLength);
-	bppml.getParam("optimization.ignore_parameters") = "BrLen,RELAX.k_1"; //,RELAX.1_Full.theta_1,RELAX.1_Full.theta1_1,RELAX.1_Full.theta2_1,RELAX.2_Full.theta_1,RELAX.2_Full.theta1_1,RELAX.2_Full.theta2_1,RELAX.3_Full.theta_1,RELAX.3_Full.theta1_1,RELAX.3_Full.theta2_1"; // ignore frequency parameters to reduce optimization duration - results in one unit of ll reduction in optimality and 1 minutre reduction in duration
-    PhylogeneticsApplicationTools::optimizeParameters(tl, tl->getParameters(), bppml.getParams());
-    double alternativeLogl = -tl->getValue();
-    ApplicationTools::displayResult("Log likelihood", TextTools::toString(alternativeLogl, 15));
-    printModelParameters(tl, model); // debug - print model parameters
+	bppml.startTimer();
+	bppml.getParam("optimization.ignore_parameters") = "BrLen,RELAX.k_1,RELAX.1_Full.theta_1,RELAX.1_Full.theta1_1,RELAX.1_Full.theta2_1,RELAX.2_Full.theta_1,RELAX.2_Full.theta1_1,RELAX.2_Full.theta2_1,RELAX.3_Full.theta_1,RELAX.3_Full.theta1_1,RELAX.3_Full.theta2_1"; // ignore frequency parameters to reduce optimization duration - results in one unit of ll reduction in optimality and 1 minutre reduction in duration
+	prevLogLikelihood = -tl->getValue();
+	currLogLikelihood = -tl->getValue();
+	index = 1;
+	do
+	{
+		cout << "Optimization cycle: " << TextTools::toString(index) << endl;
+		index = index + 1;
+		if (scaleTree >= 1)
+		{
+			OptimizationTools::optimizeTreeScale(tl, 0.000001, 1000000, ApplicationTools::message.get(), ApplicationTools::message.get(), 0);
+		}
+		reportScalingFactor(tl, origTreeLength);
+		PhylogeneticsApplicationTools::optimizeParameters(tl, tl->getParameters(), bppml.getParams());
+		printModelParameters(tl, model, origTreeLength); // debug - print model parameters
+		ApplicationTools::displayResult("Current log likelihood", TextTools::toString(-tl->getValue(), 15));
+		prevLogLikelihood = currLogLikelihood;
+		currLogLikelihood = -tl->getValue();
+		ApplicationTools::displayResult("Current diff", TextTools::toString((currLogLikelihood-prevLogLikelihood), 15));
+	} while (currLogLikelihood - prevLogLikelihood > 0.01);
+	cout << "iteraive optimzation complete" << endl;
+	double alternativeLogl = currLogLikelihood;
+	ApplicationTools::displayResult("Log likelihood", TextTools::toString(alternativeLogl, 15));
     bppml.done();
 
-    /* do LRT */
-    //doLRT(&bppml, nullLogl, alternativeLogl, 1);
 
     /* free resources */
     delete alphabet;
