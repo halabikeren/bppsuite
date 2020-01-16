@@ -271,15 +271,30 @@ int main(int args, char** argv)
 
     /* compute the maximum parsimony  for the purpose of setting bounds on the rate parameter of the character model and an intial tree partition for the starting point */
     DRTreeParsimonyScore* mpData  = new DRTreeParsimonyScore(*tree,  dynamic_cast<const SiteContainer&>(*charData)); 
-    cout << "sp" << endl;
 
     /* compute MP history */
     mpData->computeSolution();
     Tree* solution = mpData->getTree().clone();
+	vector<Node*> solutionNodes = (dynamic_cast<TreeTemplate<Node>*>(solution))->getNodes();
+	for (size_t i=0; i<solutionNodes.size(); ++i)
+	{
+		Node* currNode = solutionNodes[i];
+		Node* origNode = (dynamic_cast<TreeTemplate<Node>*>(tree))->getNode(currNode->getName());
+		if (origNode->hasDistanceToFather())
+		{
+			currNode->setDistanceToFather(origNode->getDistanceToFather());
+		}
+	}
 
     /* write MP solution */
     updateStatesInNodesNames(solution); // compute the likelihood given the mapping
-    PhylogeneticsApplicationTools::writeTree(*solution, bppml.getParams());
+    //PhylogeneticsApplicationTools::writeTree(*solution, bppml.getParams());
+	// write newick string to file
+    string treeStr = TreeTools::treeToParenthesis(*solution);
+    string filepath = ApplicationTools::getStringParameter("output.tree.file", bppml.getParams(), "", "", true, 1);
+	ofstream file (filepath);
+	file << treeStr << "\n";
+	file.close();
     
     /* write the partition data to labels file */
     setMpPartition(&bppml, solution);
