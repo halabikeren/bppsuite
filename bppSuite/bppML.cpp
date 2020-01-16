@@ -119,6 +119,19 @@ int main(int args, char** argv)
   {
     BppApplication bppml(args, argv, "BppML");
     bppml.startTimer();
+	
+	// keren - set seed
+	// process seed from parameter file, if exists
+	double seed;
+	seed = ApplicationTools::getDoubleParameter("seed", bppml.getParams(), 1);
+	if (seed == 1)
+	{
+		// else, choose a ransom seed
+		seed = RandomTools::giveRandomNumberBetweenZeroAndEntry(1.0);
+	}
+	cout << "seed=" << seed << endl;
+	RandomTools::setSeed(static_cast<long>(seed));
+
 
     Alphabet* alphabet = SequenceApplicationTools::getAlphabet(bppml.getParams(), "", false);
     unique_ptr<GeneticCode> gCode;
@@ -164,6 +177,7 @@ int main(int args, char** argv)
 
     // Try to write the current tree to file. This will be overwritten by the optimized tree,
     // but allow to check file existence before running optimization!
+	cout << "sp0 " << endl; // keren - debug
     PhylogeneticsApplicationTools::writeTree(*tree, bppml.getParams());
 
     // Setting branch lengths?
@@ -533,10 +547,12 @@ int main(int args, char** argv)
       }
     }
 
-    tl = dynamic_cast<DiscreteRatesAcrossSitesTreeLikelihood*>(
+    OptimizationTools::optimizeTreeScale(tl, 0.000001, 1000000, ApplicationTools::message.get(), ApplicationTools::message.get(), 0); // keren - optimize tree scale
+	tl = dynamic_cast<DiscreteRatesAcrossSitesTreeLikelihood*>(
       PhylogeneticsApplicationTools::optimizeParameters(tl, tl->getParameters(), bppml.getParams()));
 
     tree = new TreeTemplate<Node>(tl->getTree());
+	cout << "sp1 " << endl; // keren - debug
     PhylogeneticsApplicationTools::writeTree(*tree, bppml.getParams());
 
     // Write parameters to screen:
@@ -723,6 +739,7 @@ int main(int args, char** argv)
       }
 
       // Write resulting tree:
+	  cout << "sp2 " << endl; // keren- debug
       PhylogeneticsApplicationTools::writeTree(*tree, bppml.getParams());
     }
 
