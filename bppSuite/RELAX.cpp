@@ -57,7 +57,7 @@ using namespace std;
 /**************************** Auxiliary functions *****************************/
 /******************************************************************************/
 
-void reportScalingFactor(TreeLikelihood* tl, double origTreeLength)
+double reportScalingFactor(TreeLikelihood* tl, double origTreeLength)
 {
     const Tree& tree = tl->getTree();
     vector <const Node*> nodes = (dynamic_cast<const TreeTemplate<Node>&>(tree)).getNodes();
@@ -74,9 +74,35 @@ void reportScalingFactor(TreeLikelihood* tl, double origTreeLength)
 	cout << "treeSize: " << treeSize << endl; // debug
     double scalingFactor = treeSize / origTreeLength;
     cout << "The tree has been scaled by a sequence scaling factor of: " << scalingFactor << endl;
+	return scalingFactor;
 }
 
-void printModelParameters(DiscreteRatesAcrossSitesTreeLikelihood* tl, MixedSubstitutionModelSet* modelSet, double origTreeLength)
+RNonHomogeneousMixedTreeLikelihood* scaleLikelihoodTree(DiscreteRatesAcrossSitesTreeLikelihood* tl, double factor)
+{
+    // get a new tree and scale it
+	const Tree& origTree = tl->getTree(); // the character tree is taken because it was not affected by any previous scaling
+	Tree* newTree = origTree.clone();
+	(dynamic_cast<TreeTemplate<Node>*>(newTree))->scaleTree(factor);
+    
+	// switch the new tree with the ols tree in the sequence likelihood function
+    
+	// extract the input for the next SequenceTreeLikelihood from the previouts one
+    const VectorSiteContainer* sequenceData = dynamic_cast<const VectorSiteContainer*>(tl->getData()->clone());
+    MixedSubstitutionModelSet* sequenceModel = dynamic_cast<MixedSubstitutionModelSet*>(dynamic_cast<RNonHomogeneousMixedTreeLikelihood*>(tl)->getSubstitutionModelSet());
+    DiscreteDistribution* rDist = RASTools::getPosteriorRateDistribution(*tl);
+
+    // create the new TreeLikelihood with the scaled tree
+    RNonHomogeneousMixedTreeLikelihood* newTl = new RNonHomogeneousMixedTreeLikelihood(*newTree, *sequenceData, sequenceModel, rDist, true, true);
+    newTl->initialize();
+
+    // delete the previous SequenceTreeLikelihood instance
+    if (tl) delete tl;
+	
+	// return the new tree likelihood
+	return newTl;
+}
+
+RNonHomogeneousMixedTreeLikelihood* getModelParameters(DiscreteRatesAcrossSitesTreeLikelihood* tl, MixedSubstitutionModelSet* modelSet, double origTreeLength)
 {
   ParameterList parameters;
   for (size_t m = 0; m < modelSet->getNumberOfModels(); ++m) {
@@ -94,7 +120,9 @@ void printModelParameters(DiscreteRatesAcrossSitesTreeLikelihood* tl, MixedSubst
     ApplicationTools::displayResult(parameters[i].getName(), TextTools::toString(parameters[i].getValue()));
   }
   
-  reportScalingFactor(tl, origTreeLength);
+  double scalingFactor = reportScalingFactor(tl, origTreeLength);
+  RNonHomogeneousMixedTreeLikelihood* newTl = scaleLikelihoodTree(tl, scalingFactor);
+  return newTl;
 }
 
 VectorSiteContainer* process_alignment(Alphabet* alphabet, BppApplication bppml)
@@ -212,7 +240,7 @@ int main(int args, char** argv)
     /* compute likelihood */
     cout << "\nComputing intial log likelihood" << endl;
     ApplicationTools::displayResult("Log likelihood", TextTools::toString(-tl->getValue(), 15));
-    printModelParameters(tl, model, origTreeLength); // debug - print model parameters
+    tl = getModelParameters(tl, model, origTreeLength); // debug - print model parameters
     bppml.done();
 
     /* fit the null */
@@ -233,7 +261,7 @@ int main(int args, char** argv)
 		}
 		reportScalingFactor(tl, origTreeLength);
 		PhylogeneticsApplicationTools::optimizeParameters(tl, tl->getParameters(), bppml.getParams());
-		printModelParameters(tl, model, origTreeLength); // debug - print model parameters
+		tl = getModelParameters(tl, model, origTreeLength); // debug - print model parameters
 		ApplicationTools::displayResult("Current log likelihood", TextTools::toString(-tl->getValue(), 15));
 		prevLogLikelihood = currLogLikelihood;
 		currLogLikelihood = -tl->getValue();
@@ -263,7 +291,7 @@ int main(int args, char** argv)
 		}
 		reportScalingFactor(tl, origTreeLength);
 		PhylogeneticsApplicationTools::optimizeParameters(tl, tl->getParameters(), bppml.getParams());
-		printModelParameters(tl, model, origTreeLength); // debug - print model parameters
+		tl = getModelParameters(tl, model, origTreeLength); // debug - print model parameters
 		ApplicationTools::displayResult("Current log likelihood", TextTools::toString(-tl->getValue(), 15));
 		prevLogLikelihood = currLogLikelihood;
 		currLogLikelihood = -tl->getValue();
