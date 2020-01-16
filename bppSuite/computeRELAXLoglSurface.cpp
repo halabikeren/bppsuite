@@ -184,20 +184,35 @@ int main(int args, char** argv)
     /* compute the likelihood given increasing values of RELAX.k_2 */
     vector<double> k_values;
     k_values.clear();
-    double interval = 0.2;
+    double interval = 0.1;
     double k_value = 0;
     k_values.push_back(k_value);
-    while (k_value <= 10)
+    while (k_value + interval <= 2)
     {
         k_value = k_value + interval;
         k_values.push_back(k_value);
     }
-    cout << "k\tlog_likelihood" << endl;
+	
+	vector<double> omega2_values;
+    omega2_values.clear();
+    interval = 0.2;
+    double omega2_value = 1;
+    omega2_values.push_back(omega2_value);
+    while (omega2_value + interval <= 4)
+    {
+        omega2_value = omega2_value + interval;
+        omega2_values.push_back(omega2_value);
+    }
+    cout << "k\tomega2\tlog_likelihood" << endl;
     for (size_t i=0; i<k_values.size(); ++i)
     {
-        tl->setParameterValue("RELAX.k_2", k_values[i]);
-        tl->computeTreeLikelihood();
-        cout << k_values[i] << "\t" << -1*tl->getValue() << endl;
+		for (size_t j=0; j<omega2_values.size(); ++j)
+		{
+			tl->setParameterValue("RELAX.omega2_1", omega2_values[j]);
+			tl->setParameterValue("RELAX.k_2", k_values[i]);
+			tl->computeTreeLikelihood();
+			cout << k_values[i] << "\t" << omega2_values[j] << "\t" << -1*tl->getValue() << endl;
+		}
     }
 
     /* free resources */
