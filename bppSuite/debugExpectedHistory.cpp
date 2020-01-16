@@ -291,10 +291,11 @@ int main(int args, char** argv)
     /* set the joint likelihood function */
     ParameterList emptyParametersList;
 
-    /* for 2 mappings */
-    cout << "**** Analysis based on 2 mappings ****" << endl;
+    /* for stochastic mappings */
+    cout << "**** Analysis based on 1000 mappings ****" << endl;
     cout << "** Sampling based analysis **" << endl;
-    traitRELAX.getParam("character.num_of_mappings")  ="2";
+    traitRELAX.getParam("character.num_of_mappings")  ="100";
+	traitRELAX.getParam("character.use_analytic_mapping")  ="0";
     MixedSubstitutionModelSet* seqModel = setSequenceModel(&traitRELAX, seqData, calpha, mpData, charData, charModel, tree);
     JointLikelihoodFunction* traitRELAXLikelihoodFunction_0 = new JointLikelihoodFunction(&traitRELAX, tree, charData, charModel, seqData, seqModel, rDist, true);
     traitRELAXLikelihoodFunction_0->setOptimizationScope(JointLikelihoodFunction::OptimizationScope(0)); // only compute likelihood given the gimulated parameters
@@ -307,49 +308,8 @@ int main(int args, char** argv)
     traitRELAXLikelihoodFunction_0->setOptimizationScope(JointLikelihoodFunction::OptimizationScope(0)); // only compute likelihood given the gimulated parameters
     traitRELAXLikelihoodFunction_0->setHypothesis(JointLikelihoodFunction::Hypothesis(1));
     traitRELAXLikelihoodFunction_0->fireParameterChanged(emptyParametersList);
-    //delete seqModel;
     traitRELAX.getParam("character.use_analytic_mapping")  ="0";
     cout << "***************************************" << endl;
-
-
-    // /* for 100 mappings */
-    // cout << "**** Analysis based on 100 mappings ****" << endl;
-    // cout << "** Sampling based analysis **" << endl;
-    // traitRELAX.getParam("character.num_of_mappings")  ="100";
-    // seqModel = setSequenceModel(&traitRELAX, seqData, calpha, mpData, charData, charModel, tree);// refresh the sequence model
-    // JointLikelihoodFunction* traitRELAXLikelihoodFunction_1 = new JointLikelihoodFunction(&traitRELAX, tree, charData, charModel, seqData, seqModel, rDist, true);
-    // traitRELAXLikelihoodFunction_1->setOptimizationScope(JointLikelihoodFunction::OptimizationScope(0)); // only compute likelihood given the gimulated parameters
-    // traitRELAXLikelihoodFunction_1->setHypothesis(JointLikelihoodFunction::Hypothesis(1));
-    // traitRELAXLikelihoodFunction_1->fireParameterChanged(emptyParametersList);
-    
-    // cout << "********************" << endl;
-    // cout << " ** Analytic rewards based analysis ** " << endl;
-    // traitRELAX.getParam("character.use_analytic_mapping")  ="1";
-    // traitRELAXLikelihoodFunction_1->setOptimizationScope(JointLikelihoodFunction::OptimizationScope(0)); // only compute likelihood given the gimulated parameters
-    // traitRELAXLikelihoodFunction_1->setHypothesis(JointLikelihoodFunction::Hypothesis(1));
-    // traitRELAXLikelihoodFunction_1->fireParameterChanged(emptyParametersList);
-    // delete seqModel;
-    // traitRELAX.getParam("character.use_analytic_mapping")  ="0";
-    // cout << "***************************************" << endl;
-
-    // /* for 1000 mappings */
-    // cout << "**** Analysis based on 1000 mappings ****" << endl;
-    // cout << "** Sampling based analysis **" << endl;
-    // traitRELAX.getParam("character.num_of_mappings")  ="1000";
-    // seqModel = setSequenceModel(&traitRELAX, seqData, calpha, mpData, charData, charModel, tree);// refresh the sequence model
-    // JointLikelihoodFunction* traitRELAXLikelihoodFunction_2 = new JointLikelihoodFunction(&traitRELAX, tree, charData, charModel, seqData, seqModel, rDist, true);
-    // traitRELAXLikelihoodFunction_2->setOptimizationScope(JointLikelihoodFunction::OptimizationScope(0)); // only compute likelihood given the gimulated parameters
-    // traitRELAXLikelihoodFunction_2->setHypothesis(JointLikelihoodFunction::Hypothesis(1));
-    // traitRELAXLikelihoodFunction_2->fireParameterChanged(emptyParametersList);
-
-    // cout << "********************" << endl;
-    // cout << " ** Analytic rewards based analysis ** " << endl;
-    // traitRELAX.getParam("character.use_analytic_mapping")  ="1";
-    // traitRELAXLikelihoodFunction_2->setOptimizationScope(JointLikelihoodFunction::OptimizationScope(0)); // only compute likelihood given the gimulated parameters
-    // traitRELAXLikelihoodFunction_2->setHypothesis(JointLikelihoodFunction::Hypothesis(1));
-    // traitRELAXLikelihoodFunction_2->fireParameterChanged(emptyParametersList);
-    // traitRELAX.getParam("character.use_analytic_mapping")  ="0";
-    // cout << "***************************************" << endl;
 
     // compute likelihood given the true history and write to file in debug dir
     string trueHistoryPath = ApplicationTools::getStringParameter("true_history.tree.file", traitRELAX.getParams(), "", "", true, 1);
