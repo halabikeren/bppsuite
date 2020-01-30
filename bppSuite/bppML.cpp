@@ -118,6 +118,20 @@ int main(int args, char** argv)
   try
   {
     BppApplication bppml(args, argv, "BppML");
+	
+	// keren - set seed
+	// process seed from parameter file, if exists
+	double seed;
+	seed = ApplicationTools::getDoubleParameter("seed", bppml.getParams(), 1);
+	if (seed == 1)
+	{
+		// else, choose a ransom seed
+		seed = RandomTools::giveRandomNumberBetweenZeroAndEntry(1.0);
+	}
+	cout << "seed=" << seed << endl;
+	RandomTools::setSeed(static_cast<long>(seed));
+	
+	
     bppml.startTimer();
 
     Alphabet* alphabet = SequenceApplicationTools::getAlphabet(bppml.getParams(), "", false);
@@ -234,7 +248,13 @@ int main(int args, char** argv)
       cout << "BppML's done." << endl;
       exit(0);
     }
-
+	
+	// keren - scale tree if needed
+	double scalingParameter = ApplicationTools::getDoubleParameter("tree.scale", bppml.getParams(), 1);
+	if (scalingParameter != 1)
+	{
+		tree->scaleTree(scalingParameter);
+	}
 
     /////////////////////////
     // MODEL  & LIKELIHOOD
@@ -480,7 +500,16 @@ int main(int args, char** argv)
       logL = tl->getValue();
     }
     ApplicationTools::displayResult("Initial log likelihood", TextTools::toString(-logL, 15));
-    if (std::isinf(logL))
+    
+	// keren - debug- start
+	ParameterList debugParameters = tl->getParameters();
+	for (size_t p=0; p<debugParameters.size(); ++p)
+	{
+		ApplicationTools::displayResult(debugParameters[p].getName(), TextTools::toString(debugParameters[p].getValue()));
+	}
+	// keren - debug - end
+	
+	if (std::isinf(logL))
     {
       ApplicationTools::displayError("!!! Unexpected initial likelihood == 0.");
       if (codonAlphabet)
@@ -533,9 +562,32 @@ int main(int args, char** argv)
       }
     }
 
-    tl = dynamic_cast<DiscreteRatesAcrossSitesTreeLikelihood*>(
+	// keren -add option to optimize tree scale
+	int scaleTree = ApplicationTools::getIntParameter("optimization.scale.tree", bppml.getParams(), 0);
+	if (scaleTree > 0)
+	{
+		OptimizationTools::optimizeTreeScale(tl, 0.000001, 1000000, ApplicationTools::message.get(), ApplicationTools::message.get(), 1);
+	}
+	int scaleTreeTwice = ApplicationTools::getIntParameter("optimization.scale.tree.twice", bppml.getParams(), 0);
+		if (scaleTreeTwice > 0)
+	{
+		OptimizationTools::optimizeTreeScale(tl, 0.000001, 1000000, ApplicationTools::message.get(), ApplicationTools::message.get(), 1);
+	}
+	// keren - debug- start
+	debugParameters = tl->getParameters();
+	for (size_t p=0; p<debugParameters.size(); ++p)
+	{
+		ApplicationTools::displayResult(debugParameters[p].getName(), TextTools::toString(debugParameters[p].getValue()));
+	}
+	// keren - debug - end
+	tl = dynamic_cast<DiscreteRatesAcrossSitesTreeLikelihood*>(
       PhylogeneticsApplicationTools::optimizeParameters(tl, tl->getParameters(), bppml.getParams()));
-
+	int scaleTreeThird = ApplicationTools::getIntParameter("optimization.scale.tree.third", bppml.getParams(), 0);
+		if (scaleTreeThird > 0)
+	{
+		OptimizationTools::optimizeTreeScale(tl, 0.000001, 1000000, ApplicationTools::message.get(), ApplicationTools::message.get(), 1);
+	}
+	
     tree = new TreeTemplate<Node>(tl->getTree());
     PhylogeneticsApplicationTools::writeTree(*tree, bppml.getParams());
 
@@ -744,4 +796,3 @@ int main(int args, char** argv)
 
   return 0;
 }
-
