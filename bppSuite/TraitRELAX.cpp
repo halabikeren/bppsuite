@@ -354,8 +354,7 @@ VVDouble getNeighbors(VVDouble &grid, double currentMu, double currentPi0)
 
 void optimizeAlternativeCharacterModelByGrid(map<string, double> &optimalValues, JointLikelihoodFunction *jointlikelihoodFunction, TransitionModel *characterModel, uint verbose = 1, uint gridSize = 10, bool firstCycle = true)
 {
-  cout << "* Optimizng joint likelihood function with respect to character parameters using grid *\n"
-       << endl;
+  cout << "* Optimizng joint likelihood function with respect to character parameters using grid *\n" << endl;
 
   // set the grid bounds on the rate and kappa parameters of the character model
   const IntervalConstraint *muBounds = dynamic_cast<const IntervalConstraint *>(characterModel->getParameter("mu").getConstraint());
@@ -427,43 +426,96 @@ void optimizeAlternativeCharacterModelByGrid(map<string, double> &optimalValues,
 
 /******************************************************************************/
 
-// 27.8.18, note to future: use powell for two dimentional brent
 void optimizeAlternativeCharacterModelByBrent(map<string, double> &optimalValues, JointLikelihoodFunction *jointlikelihoodFunction, TransitionModel *characterModel, uint verbose = 1)
 {
-  cout << "* Optimizing joint likelihood function with respect to character parameters using one dimentional brent *\n"
-       << endl;
-
-  // // set the brent one dimontional optimizer
-  // optimalValues["log_likelihood"] = -INFINITY;
-  BrentOneDimension *characterParametersOptimizer = new BrentOneDimension(jointlikelihoodFunction);
+  cout << "* Optimizing joint likelihood function with respect to character parameters using one dimentional brent *\n" << endl;
+  double prevLogLikelihood = -jointlikelihoodFunction->getValue();
+  double currLogLikelihood = -jointlikelihoodFunction->getValue();
+  size_t index = 1;
+  // set the brent one dimontional optimizer
+  BrentOneDimension* characterParametersOptimizer = new BrentOneDimension(jointlikelihoodFunction);
   characterParametersOptimizer->setBracketing(BrentOneDimension::BRACKET_INWARD);
-  characterParametersOptimizer->getStopCondition()->setTolerance(0.01);               // set the tolerance to be slighly less strict to account for the instability of the joint likelihood function
-  characterParametersOptimizer->setConstraintPolicy(AutoParameter::CONSTRAINTS_AUTO); // 3.4.19 - keren - OTHERWISE, CONSTRAINT IS EXCEEDED
+  characterParametersOptimizer->getStopCondition()->setTolerance(0.01); // set the tolerance to be slighly less strict to account for the instability of the joint likelihood function
+  characterParametersOptimizer->setConstraintPolicy(AutoParameter::CONSTRAINTS_AUTO);
   characterParametersOptimizer->setProfiler(0);
   characterParametersOptimizer->setMessageHandler(0);
   characterParametersOptimizer->setVerbose(1);
-
-  // optimize the joint model with respect to pi0
-  ParameterList pi0;
-  pi0.addParameter(jointlikelihoodFunction->getParameter("TwoParameterBinary.pi0"));
-  const IntervalConstraint *pi0Bounds = dynamic_cast<const IntervalConstraint *>(jointlikelihoodFunction->getParameter("TwoParameterBinary.pi0").getConstraint());
-  characterParametersOptimizer->setInitialInterval(pi0Bounds->getLowerBound(), pi0Bounds->getUpperBound()); // search within stricter bounds that the actual ones of pi0 to avoid failute of stochasitc mapping
-  characterParametersOptimizer->init(pi0);
-  characterParametersOptimizer->optimize();
-
-  optimalValues["pi0"] = jointlikelihoodFunction->getParameter("TwoParameterBinary.pi0").getValue();
-
-  // optimize the model with respect to the mu
-  ParameterList mu;
+  ParameterList pi0, mu;
   mu.addParameter(jointlikelihoodFunction->getParameter("TwoParameterBinary.mu"));
   const IntervalConstraint *muBounds = dynamic_cast<const IntervalConstraint *>(jointlikelihoodFunction->getParameter("TwoParameterBinary.mu").getConstraint());
-  characterParametersOptimizer->setInitialInterval(muBounds->getLowerBound() + 0.0001, muBounds->getUpperBound() - 0.0001);
-  characterParametersOptimizer->init(mu);
-  characterParametersOptimizer->optimize();
-  optimalValues["mu"] = jointlikelihoodFunction->getParameter("TwoParameterBinary.mu").getValue();
-  optimalValues["log_likelihood"] = jointlikelihoodFunction->getCharacterLikelihoodFunction()->getValue();
-  ApplicationTools::displayResult("Character log Likelihood after brent: ", TextTools::toString(-1 * jointlikelihoodFunction->getCharacterLikelihoodFunction()->getValue(), 15));
+  pi0.addParameter(jointlikelihoodFunction->getParameter("TwoParameterBinary.pi0"));
+  const IntervalConstraint *pi0Bounds = dynamic_cast<const IntervalConstraint *>(jointlikelihoodFunction->getParameter("TwoParameterBinary.pi0").getConstraint());
+  
+  do
+  {
+    cout << "Optimization cycle: " << TextTools::toString(index) << endl;
+    index = index + 1;
+    prevLogLikelihood = -jointlikelihoodFunction->getValue();
+
+    // optimize the joint model with respect to pi0
+    characterParametersOptimizer->setInitialInterval(pi0Bounds->getLowerBound(), pi0Bounds->getUpperBound()); // search within stricter bounds that the actual ones of pi0 to avoid failute of stochasitc mapping
+    characterParametersOptimizer->init(pi0);
+    characterParametersOptimizer->optimize();
+  
+    // optimize the model with respect to the mu
+    characterParametersOptimizer->setInitialInterval(muBounds->getLowerBound() + 0.0001, muBounds->getUpperBound() - 0.0001);
+    characterParametersOptimizer->init(mu);
+    characterParametersOptimizer->optimize();
+
+    optimalValues["pi0"] = jointlikelihoodFunction->getParameter("TwoParameterBinary.pi0").getValue();
+    optimalValues["mu"] = jointlikelihoodFunction->getParameter("TwoParameterBinary.mu").getValue();
+    optimalValues["log_likelihood"] = jointlikelihoodFunction->getCharacterLikelihoodFunction()->getValue();
+
+    currLogLikelihood = -jointlikelihoodFunction->getValue();
+    ApplicationTools::displayResult("Current log likelihood", TextTools::toString(-currLogLikelihood, 15));
+    ApplicationTools::displayResult("Current diff", TextTools::toString((currLogLikelihood-prevLogLikelihood), 15));
+
+  } while (currLogLikelihood - prevLogLikelihood > 0.01);
   delete characterParametersOptimizer;
+}
+
+/******************************************************************************/
+
+// 27.8.18, note to future: use powell for two dimentional brent
+void optimizeAlternativeCharacterModelByPowell(map<string, double> &optimalValues, JointLikelihoodFunction *jointlikelihoodFunction, TransitionModel *characterModel, uint verbose = 1)
+{
+  cout << "* Optimizing joint likelihood function with respect to character parameters using two dimentional brent (i.e., powell) *\n" << endl;
+  // set the brent two dimontional optimizer
+  PowellMultiDimensions *characterParametersOptimizer = new PowellMultiDimensions(jointlikelihoodFunction);
+  ParameterList parametersToEstimate;
+  parametersToEstimate.addParameter(jointlikelihoodFunction->getParameter("TwoParameterBinary.mu"));
+  parametersToEstimate.addParameter(jointlikelihoodFunction->getParameter("TwoParameterBinary.pi0"));
+  characterParametersOptimizer->setProfiler(0);
+  characterParametersOptimizer->setMessageHandler(0);
+  characterParametersOptimizer->setMaximumNumberOfEvaluations(1000);
+  characterParametersOptimizer->getStopCondition()->setTolerance(0.01);
+  characterParametersOptimizer->setVerbose(1);
+  characterParametersOptimizer->setConstraintPolicy(AutoParameter::CONSTRAINTS_AUTO);
+  characterParametersOptimizer->init(parametersToEstimate);
+
+  double prevLogLikelihood = -jointlikelihoodFunction->getValue();
+  double currLogLikelihood = -jointlikelihoodFunction->getValue();
+  size_t index = 1;
+  do
+  {
+    cout << "Optimization cycle: " << TextTools::toString(index) << endl;
+    index = index + 1;
+    prevLogLikelihood = -jointlikelihoodFunction->getValue();
+
+
+    characterParametersOptimizer->optimize();
+
+    optimalValues["pi0"] = jointlikelihoodFunction->getParameter("TwoParameterBinary.pi0").getValue();
+    optimalValues["mu"] = jointlikelihoodFunction->getParameter("TwoParameterBinary.mu").getValue();
+    optimalValues["log_likelihood"] = jointlikelihoodFunction->getCharacterLikelihoodFunction()->getValue();
+
+    currLogLikelihood = -jointlikelihoodFunction->getValue();
+    ApplicationTools::displayResult("Current log likelihood", TextTools::toString(-currLogLikelihood, 15));
+    ApplicationTools::displayResult("Current diff", TextTools::toString((currLogLikelihood-prevLogLikelihood), 15));
+
+  } while (currLogLikelihood - prevLogLikelihood > 0.01);
+  delete characterParametersOptimizer;
+
 }
 
 /******************************************************************************/
@@ -539,8 +591,7 @@ int main(int args, char **argv)
     traitRELAXLikelihoodFunction->setOptimizationScope(JointLikelihoodFunction::OptimizationScope(2));
 
     // set starting point by optimizing sequence paTotal execution time:rameters why relaxing the constraint on the selection intensity parameter, so that the maximum parsmony based partiton will be considered
-    cout << "\n** Setting starting point by relaxing constraint on the selection intensity parameter for model2 and using maximum parsimony based partition **\n"
-         << endl;
+    cout << "\n** Setting starting point by relaxing constraint on the selection intensity parameter for model2 and using maximum parsimony based partition **\n" << endl;
     traitRELAX.startTimer();
     // optimize with starting point 1: null inference result
     cout << "Starting point 1: null fitting result" << endl;
@@ -599,25 +650,29 @@ int main(int args, char **argv)
     {
       traitRELAX.startTimer();
       /* optimize the character model while fixing the sequence model with respect to the joint model */
-      cout << "\n** Step 1: fix sequence model parameters, optimize character model parameters **\n"
-           << endl;
+      cout << "\n** Step 1: fix sequence model parameters, optimize character model parameters **\n" << endl;
       traitRELAXLikelihoodFunction->setOptimizationScope(JointLikelihoodFunction::OptimizationScope(0)); // no optimization of sequece parameters is required at these stage
       string characterOptimizationMethod = ApplicationTools::getStringParameter("optimization.character_method", traitRELAX.getParams(), "brent");
       map<string, double> optimalCharacterParameters;
+      int useOneDimentionOpt = ApplicationTools::getIntParameter("optimization.character.one.dimension", traitRELAX.getParams(), 1);
       optimalCharacterParameters.clear();
       if (characterOptimizationMethod.compare("grid") == 0)
       {
         uint gridSize = static_cast<unsigned int>(ApplicationTools::getIntParameter("optimization.grid_size", traitRELAX.getParams(), 10));
         optimizeAlternativeCharacterModelByGrid(optimalCharacterParameters, traitRELAXLikelihoodFunction, charModel, verbose, gridSize);
       }
-      else // use brent
+      else if (useOneDimentionOpt == 1)// use brent
       {
         optimizeAlternativeCharacterModelByBrent(optimalCharacterParameters, traitRELAXLikelihoodFunction, charModel, verbose);
       }
+      else
+      {
+        optimizeAlternativeCharacterModelByPowell(optimalCharacterParameters, traitRELAXLikelihoodFunction, charModel, verbose);
+      }
+      
 
       /* report optimal character parameters */
-      cout << "\n** Optimal character parameters: **\n"
-           << endl;
+      cout << "\n** Optimal character parameters: **\n" << endl;
       ApplicationTools::displayResult("Mu", TextTools::toString(optimalCharacterParameters["mu"]));
       ApplicationTools::displayResult("Pi0", TextTools::toString(optimalCharacterParameters["pi0"]));
       traitRELAX.done();
