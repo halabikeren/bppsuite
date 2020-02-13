@@ -1,0 +1,432 @@
+The system is: Linux - 3.10.0-514.el7.x86_64 - x86_64
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+Compiler: /powerapps/share/mpi/openmpi-1.10.4.c7/bin/mpic++ 
+Build flags: 
+Id flags:  
+
+The output was:
+0
+
+
+Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
+
+The CXX compiler identification is GNU, found in "/groups/itay_mayrose/halabikeren/biopp/bppsuite/build/CMakeFiles/3.9.0-rc5/CompilerIdCXX/a.out"
+
+Determining if the CXX compiler works passed with the following output:
+Change Dir: /groups/itay_mayrose/halabikeren/biopp/bppsuite/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/gmake" "cmTC_95ed0/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_95ed0.dir/build.make CMakeFiles/cmTC_95ed0.dir/build
+gmake[1]: Entering directory `/groups/itay_mayrose/halabikeren/biopp/bppsuite/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_95ed0.dir/testCXXCompiler.cxx.o
+/powerapps/share/mpi/openmpi-1.10.4.c7/bin/mpic++     -o CMakeFiles/cmTC_95ed0.dir/testCXXCompiler.cxx.o -c /groups/itay_mayrose/halabikeren/biopp/bppsuite/build/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
+Linking CXX executable cmTC_95ed0
+/powerapps/share/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_95ed0.dir/link.txt --verbose=1
+/powerapps/share/mpi/openmpi-1.10.4.c7/bin/mpic++       -rdynamic CMakeFiles/cmTC_95ed0.dir/testCXXCompiler.cxx.o  -o cmTC_95ed0 
+gmake[1]: Leaving directory `/groups/itay_mayrose/halabikeren/biopp/bppsuite/build/CMakeFiles/CMakeTmp'
+
+
+Detecting CXX compiler ABI info compiled with the following output:
+Change Dir: /groups/itay_mayrose/halabikeren/biopp/bppsuite/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/gmake" "cmTC_87422/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_87422.dir/build.make CMakeFiles/cmTC_87422.dir/build
+gmake[1]: Entering directory `/groups/itay_mayrose/halabikeren/biopp/bppsuite/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_87422.dir/CMakeCXXCompilerABI.cpp.o
+/powerapps/share/mpi/openmpi-1.10.4.c7/bin/mpic++     -o CMakeFiles/cmTC_87422.dir/CMakeCXXCompilerABI.cpp.o -c /powerapps/share/cmake/share/cmake-3.9/Modules/CMakeCXXCompilerABI.cpp
+Linking CXX executable cmTC_87422
+/powerapps/share/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_87422.dir/link.txt --verbose=1
+/powerapps/share/mpi/openmpi-1.10.4.c7/bin/mpic++      -v -rdynamic CMakeFiles/cmTC_87422.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_87422 
+Using built-in specs.
+COLLECT_GCC=/powerapps/share/gcc/gcc-7.2.0/bin/g++
+COLLECT_LTO_WRAPPER=/powerapps/share/gcc/gcc-7.2.0/libexec/gcc/x86_64-pc-linux-gnu/7.2.0/lto-wrapper
+Target: x86_64-pc-linux-gnu
+Configured with: ../configure --prefix=/powerapps/share/gcc/gcc-7.2.0 --with-ecj-jar=../ecj-latest.jar --with-local-prefix=/powerapps/share/gcc/gcc-7.2.0 --enable-languages=c,c++,fortran,go --disable-multilib
+Thread model: posix
+gcc version 7.2.0 (GCC) 
+COMPILER_PATH=/powerapps/share/gcc/gcc-7.2.0/libexec/gcc/x86_64-pc-linux-gnu/7.2.0/:/powerapps/share/gcc/gcc-7.2.0/libexec/gcc/x86_64-pc-linux-gnu/7.2.0/:/powerapps/share/gcc/gcc-7.2.0/libexec/gcc/x86_64-pc-linux-gnu/:/powerapps/share/gcc/gcc-7.2.0/lib/gcc/x86_64-pc-linux-gnu/7.2.0/:/powerapps/share/gcc/gcc-7.2.0/lib/gcc/x86_64-pc-linux-gnu/
+LIBRARY_PATH=/powerapps/share/gcc/gcc-7.2.0/lib64/../lib64/:/powerapps/share/gcc/gcc-7.2.0/lib/../lib64/:/powerapps/share/gcc/gcc-7.2.0/lib/gcc/x86_64-pc-linux-gnu/7.2.0/:/powerapps/share/gcc/gcc-7.2.0/lib/gcc/x86_64-pc-linux-gnu/7.2.0/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/powerapps/share/gcc/gcc-7.2.0/lib64/:/powerapps/share/gcc/gcc-7.2.0/lib/:/powerapps/share/gcc/gcc-7.2.0/lib/gcc/x86_64-pc-linux-gnu/7.2.0/../../../:/lib/:/usr/lib/
+COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_87422' '-I' '/powerapps/share/mpi/openmpi-1.10.4.c7/include' '-pthread' '-L/powerapps/share/mpi/openmpi-1.10.4.c7/lib' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+ /powerapps/share/gcc/gcc-7.2.0/libexec/gcc/x86_64-pc-linux-gnu/7.2.0/collect2 -plugin /powerapps/share/gcc/gcc-7.2.0/libexec/gcc/x86_64-pc-linux-gnu/7.2.0/liblto_plugin.so -plugin-opt=/powerapps/share/gcc/gcc-7.2.0/libexec/gcc/x86_64-pc-linux-gnu/7.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccmElxw8.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --eh-frame-hdr -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_87422 /lib/../lib64/crt1.o /lib/../lib64/crti.o /powerapps/share/gcc/gcc-7.2.0/lib/gcc/x86_64-pc-linux-gnu/7.2.0/crtbegin.o -L/powerapps/share/mpi/openmpi-1.10.4.c7/lib -L/powerapps/share/gcc/gcc-7.2.0/lib64/../lib64 -L/powerapps/share/gcc/gcc-7.2.0/lib/../lib64 -L/powerapps/share/gcc/gcc-7.2.0/lib/gcc/x86_64-pc-linux-gnu/7.2.0 -L/powerapps/share/gcc/gcc-7.2.0/lib/gcc/x86_64-pc-linux-gnu/7.2.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/powerapps/share/gcc/gcc-7.2.0/lib64 -L/powerapps/share/gcc/gcc-7.2.0/lib -L/powerapps/share/gcc/gcc-7.2.0/lib/gcc/x86_64-pc-linux-gnu/7.2.0/../../.. CMakeFiles/cmTC_87422.dir/CMakeCXXCompilerABI.cpp.o -rpath /powerapps/share/mpi/openmpi-1.10.4.c7/lib --enable-new-dtags -lmpi_cxx -lmpi -lstdc++ -lm -lgcc_s -lgcc -lpthread -lc -lgcc_s -lgcc /powerapps/share/gcc/gcc-7.2.0/lib/gcc/x86_64-pc-linux-gnu/7.2.0/crtend.o /lib/../lib64/crtn.o
+COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_87422' '-I' '/powerapps/share/mpi/openmpi-1.10.4.c7/include' '-pthread' '-L/powerapps/share/mpi/openmpi-1.10.4.c7/lib' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+gmake[1]: Leaving directory `/groups/itay_mayrose/halabikeren/biopp/bppsuite/build/CMakeFiles/CMakeTmp'
+
+
+Parsed CXX implicit link information from above output:
+  link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
+  ignore line: [Change Dir: /groups/itay_mayrose/halabikeren/biopp/bppsuite/build/CMakeFiles/CMakeTmp]
+  ignore line: []
+  ignore line: [Run Build Command:"/usr/bin/gmake" "cmTC_87422/fast"]
+  ignore line: [/usr/bin/gmake -f CMakeFiles/cmTC_87422.dir/build.make CMakeFiles/cmTC_87422.dir/build]
+  ignore line: [gmake[1]: Entering directory `/groups/itay_mayrose/halabikeren/biopp/bppsuite/build/CMakeFiles/CMakeTmp']
+  ignore line: [Building CXX object CMakeFiles/cmTC_87422.dir/CMakeCXXCompilerABI.cpp.o]
+  ignore line: [/powerapps/share/mpi/openmpi-1.10.4.c7/bin/mpic++     -o CMakeFiles/cmTC_87422.dir/CMakeCXXCompilerABI.cpp.o -c /powerapps/share/cmake/share/cmake-3.9/Modules/CMakeCXXCompilerABI.cpp]
+  ignore line: [Linking CXX executable cmTC_87422]
+  ignore line: [/powerapps/share/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_87422.dir/link.txt --verbose=1]
+  ignore line: [/powerapps/share/mpi/openmpi-1.10.4.c7/bin/mpic++      -v -rdynamic CMakeFiles/cmTC_87422.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_87422 ]
+  ignore line: [Using built-in specs.]
+  ignore line: [COLLECT_GCC=/powerapps/share/gcc/gcc-7.2.0/bin/g++]
+  ignore line: [COLLECT_LTO_WRAPPER=/powerapps/share/gcc/gcc-7.2.0/libexec/gcc/x86_64-pc-linux-gnu/7.2.0/lto-wrapper]
+  ignore line: [Target: x86_64-pc-linux-gnu]
+  ignore line: [Configured with: ../configure --prefix=/powerapps/share/gcc/gcc-7.2.0 --with-ecj-jar=../ecj-latest.jar --with-local-prefix=/powerapps/share/gcc/gcc-7.2.0 --enable-languages=c,c++,fortran,go --disable-multilib]
+  ignore line: [Thread model: posix]
+  ignore line: [gcc version 7.2.0 (GCC) ]
+  ignore line: [COMPILER_PATH=/powerapps/share/gcc/gcc-7.2.0/libexec/gcc/x86_64-pc-linux-gnu/7.2.0/:/powerapps/share/gcc/gcc-7.2.0/libexec/gcc/x86_64-pc-linux-gnu/7.2.0/:/powerapps/share/gcc/gcc-7.2.0/libexec/gcc/x86_64-pc-linux-gnu/:/powerapps/share/gcc/gcc-7.2.0/lib/gcc/x86_64-pc-linux-gnu/7.2.0/:/powerapps/share/gcc/gcc-7.2.0/lib/gcc/x86_64-pc-linux-gnu/]
+  ignore line: [LIBRARY_PATH=/powerapps/share/gcc/gcc-7.2.0/lib64/../lib64/:/powerapps/share/gcc/gcc-7.2.0/lib/../lib64/:/powerapps/share/gcc/gcc-7.2.0/lib/gcc/x86_64-pc-linux-gnu/7.2.0/:/powerapps/share/gcc/gcc-7.2.0/lib/gcc/x86_64-pc-linux-gnu/7.2.0/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/powerapps/share/gcc/gcc-7.2.0/lib64/:/powerapps/share/gcc/gcc-7.2.0/lib/:/powerapps/share/gcc/gcc-7.2.0/lib/gcc/x86_64-pc-linux-gnu/7.2.0/../../../:/lib/:/usr/lib/]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_87422' '-I' '/powerapps/share/mpi/openmpi-1.10.4.c7/include' '-pthread' '-L/powerapps/share/mpi/openmpi-1.10.4.c7/lib' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+  link line: [ /powerapps/share/gcc/gcc-7.2.0/libexec/gcc/x86_64-pc-linux-gnu/7.2.0/collect2 -plugin /powerapps/share/gcc/gcc-7.2.0/libexec/gcc/x86_64-pc-linux-gnu/7.2.0/liblto_plugin.so -plugin-opt=/powerapps/share/gcc/gcc-7.2.0/libexec/gcc/x86_64-pc-linux-gnu/7.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccmElxw8.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --eh-frame-hdr -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_87422 /lib/../lib64/crt1.o /lib/../lib64/crti.o /powerapps/share/gcc/gcc-7.2.0/lib/gcc/x86_64-pc-linux-gnu/7.2.0/crtbegin.o -L/powerapps/share/mpi/openmpi-1.10.4.c7/lib -L/powerapps/share/gcc/gcc-7.2.0/lib64/../lib64 -L/powerapps/share/gcc/gcc-7.2.0/lib/../lib64 -L/powerapps/share/gcc/gcc-7.2.0/lib/gcc/x86_64-pc-linux-gnu/7.2.0 -L/powerapps/share/gcc/gcc-7.2.0/lib/gcc/x86_64-pc-linux-gnu/7.2.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/powerapps/share/gcc/gcc-7.2.0/lib64 -L/powerapps/share/gcc/gcc-7.2.0/lib -L/powerapps/share/gcc/gcc-7.2.0/lib/gcc/x86_64-pc-linux-gnu/7.2.0/../../.. CMakeFiles/cmTC_87422.dir/CMakeCXXCompilerABI.cpp.o -rpath /powerapps/share/mpi/openmpi-1.10.4.c7/lib --enable-new-dtags -lmpi_cxx -lmpi -lstdc++ -lm -lgcc_s -lgcc -lpthread -lc -lgcc_s -lgcc /powerapps/share/gcc/gcc-7.2.0/lib/gcc/x86_64-pc-linux-gnu/7.2.0/crtend.o /lib/../lib64/crtn.o]
+    arg [/powerapps/share/gcc/gcc-7.2.0/libexec/gcc/x86_64-pc-linux-gnu/7.2.0/collect2] ==> ignore
+    arg [-plugin] ==> ignore
+    arg [/powerapps/share/gcc/gcc-7.2.0/libexec/gcc/x86_64-pc-linux-gnu/7.2.0/liblto_plugin.so] ==> ignore
+    arg [-plugin-opt=/powerapps/share/gcc/gcc-7.2.0/libexec/gcc/x86_64-pc-linux-gnu/7.2.0/lto-wrapper] ==> ignore
+    arg [-plugin-opt=-fresolution=/tmp/ccmElxw8.res] ==> ignore
+    arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+    arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+    arg [-plugin-opt=-pass-through=-lpthread] ==> ignore
+    arg [-plugin-opt=-pass-through=-lc] ==> ignore
+    arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+    arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+    arg [--eh-frame-hdr] ==> ignore
+    arg [-m] ==> ignore
+    arg [elf_x86_64] ==> ignore
+    arg [-export-dynamic] ==> ignore
+    arg [-dynamic-linker] ==> ignore
+    arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+    arg [-o] ==> ignore
+    arg [cmTC_87422] ==> ignore
+    arg [/lib/../lib64/crt1.o] ==> ignore
+    arg [/lib/../lib64/crti.o] ==> ignore
+    arg [/powerapps/share/gcc/gcc-7.2.0/lib/gcc/x86_64-pc-linux-gnu/7.2.0/crtbegin.o] ==> ignore
+    arg [-L/powerapps/share/mpi/openmpi-1.10.4.c7/lib] ==> dir [/powerapps/share/mpi/openmpi-1.10.4.c7/lib]
+    arg [-L/powerapps/share/gcc/gcc-7.2.0/lib64/../lib64] ==> dir [/powerapps/share/gcc/gcc-7.2.0/lib64/../lib64]
+    arg [-L/powerapps/share/gcc/gcc-7.2.0/lib/../lib64] ==> dir [/powerapps/share/gcc/gcc-7.2.0/lib/../lib64]
+    arg [-L/powerapps/share/gcc/gcc-7.2.0/lib/gcc/x86_64-pc-linux-gnu/7.2.0] ==> dir [/powerapps/share/gcc/gcc-7.2.0/lib/gcc/x86_64-pc-linux-gnu/7.2.0]
+    arg [-L/powerapps/share/gcc/gcc-7.2.0/lib/gcc/x86_64-pc-linux-gnu/7.2.0/../../../../lib64] ==> dir [/powerapps/share/gcc/gcc-7.2.0/lib/gcc/x86_64-pc-linux-gnu/7.2.0/../../../../lib64]
+    arg [-L/lib/../lib64] ==> dir [/lib/../lib64]
+    arg [-L/usr/lib/../lib64] ==> dir [/usr/lib/../lib64]
+    arg [-L/powerapps/share/gcc/gcc-7.2.0/lib64] ==> dir [/powerapps/share/gcc/gcc-7.2.0/lib64]
+    arg [-L/powerapps/share/gcc/gcc-7.2.0/lib] ==> dir [/powerapps/share/gcc/gcc-7.2.0/lib]
+    arg [-L/powerapps/share/gcc/gcc-7.2.0/lib/gcc/x86_64-pc-linux-gnu/7.2.0/../../..] ==> dir [/powerapps/share/gcc/gcc-7.2.0/lib/gcc/x86_64-pc-linux-gnu/7.2.0/../../..]
+    arg [CMakeFiles/cmTC_87422.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+    arg [-rpath] ==> ignore
+    arg [/powerapps/share/mpi/openmpi-1.10.4.c7/lib] ==> ignore
+    arg [--enable-new-dtags] ==> ignore
+    arg [-lmpi_cxx] ==> lib [mpi_cxx]
+    arg [-lmpi] ==> lib [mpi]
+    arg [-lstdc++] ==> lib [stdc++]
+    arg [-lm] ==> lib [m]
+    arg [-lgcc_s] ==> lib [gcc_s]
+    arg [-lgcc] ==> lib [gcc]
+    arg [-lpthread] ==> lib [pthread]
+    arg [-lc] ==> lib [c]
+    arg [-lgcc_s] ==> lib [gcc_s]
+    arg [-lgcc] ==> lib [gcc]
+    arg [/powerapps/share/gcc/gcc-7.2.0/lib/gcc/x86_64-pc-linux-gnu/7.2.0/crtend.o] ==> ignore
+    arg [/lib/../lib64/crtn.o] ==> ignore
+  collapse library dir [/powerapps/share/mpi/openmpi-1.10.4.c7/lib] ==> [/powerapps/share/mpi/openmpi-1.10.4.c7/lib]
+  collapse library dir [/powerapps/share/gcc/gcc-7.2.0/lib64/../lib64] ==> [/powerapps/share/gcc/gcc-7.2.0/lib64]
+  collapse library dir [/powerapps/share/gcc/gcc-7.2.0/lib/../lib64] ==> [/powerapps/share/gcc/gcc-7.2.0/lib64]
+  collapse library dir [/powerapps/share/gcc/gcc-7.2.0/lib/gcc/x86_64-pc-linux-gnu/7.2.0] ==> [/powerapps/share/gcc/gcc-7.2.0/lib/gcc/x86_64-pc-linux-gnu/7.2.0]
+  collapse library dir [/powerapps/share/gcc/gcc-7.2.0/lib/gcc/x86_64-pc-linux-gnu/7.2.0/../../../../lib64] ==> [/powerapps/share/gcc/gcc-7.2.0/lib64]
+  collapse library dir [/lib/../lib64] ==> [/lib64]
+  collapse library dir [/usr/lib/../lib64] ==> [/usr/lib64]
+  collapse library dir [/powerapps/share/gcc/gcc-7.2.0/lib64] ==> [/powerapps/share/gcc/gcc-7.2.0/lib64]
+  collapse library dir [/powerapps/share/gcc/gcc-7.2.0/lib] ==> [/powerapps/share/gcc/gcc-7.2.0/lib]
+  collapse library dir [/powerapps/share/gcc/gcc-7.2.0/lib/gcc/x86_64-pc-linux-gnu/7.2.0/../../..] ==> [/powerapps/share/gcc/gcc-7.2.0/lib]
+  implicit libs: [mpi_cxx;mpi;stdc++;m;gcc_s;gcc;pthread;c;gcc_s;gcc]
+  implicit dirs: [/powerapps/share/mpi/openmpi-1.10.4.c7/lib;/powerapps/share/gcc/gcc-7.2.0/lib64;/powerapps/share/gcc/gcc-7.2.0/lib/gcc/x86_64-pc-linux-gnu/7.2.0;/lib64;/usr/lib64;/powerapps/share/gcc/gcc-7.2.0/lib]
+  implicit fwks: []
+
+
+
+
+Detecting CXX [-std=c++1z] compiler features compiled with the following output:
+Change Dir: /groups/itay_mayrose/halabikeren/biopp/bppsuite/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/gmake" "cmTC_67000/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_67000.dir/build.make CMakeFiles/cmTC_67000.dir/build
+gmake[1]: Entering directory `/groups/itay_mayrose/halabikeren/biopp/bppsuite/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_67000.dir/feature_tests.cxx.o
+/powerapps/share/mpi/openmpi-1.10.4.c7/bin/mpic++    -std=c++1z -o CMakeFiles/cmTC_67000.dir/feature_tests.cxx.o -c /groups/itay_mayrose/halabikeren/biopp/bppsuite/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_67000
+/powerapps/share/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_67000.dir/link.txt --verbose=1
+/powerapps/share/mpi/openmpi-1.10.4.c7/bin/mpic++       -rdynamic CMakeFiles/cmTC_67000.dir/feature_tests.cxx.o  -o cmTC_67000 
+gmake[1]: Leaving directory `/groups/itay_mayrose/halabikeren/biopp/bppsuite/build/CMakeFiles/CMakeTmp'
+
+
+    Feature record: CXX_FEATURE:1cxx_aggregate_default_initializers
+    Feature record: CXX_FEATURE:1cxx_alias_templates
+    Feature record: CXX_FEATURE:1cxx_alignas
+    Feature record: CXX_FEATURE:1cxx_alignof
+    Feature record: CXX_FEATURE:1cxx_attributes
+    Feature record: CXX_FEATURE:1cxx_attribute_deprecated
+    Feature record: CXX_FEATURE:1cxx_auto_type
+    Feature record: CXX_FEATURE:1cxx_binary_literals
+    Feature record: CXX_FEATURE:1cxx_constexpr
+    Feature record: CXX_FEATURE:1cxx_contextual_conversions
+    Feature record: CXX_FEATURE:1cxx_decltype
+    Feature record: CXX_FEATURE:1cxx_decltype_auto
+    Feature record: CXX_FEATURE:1cxx_decltype_incomplete_return_types
+    Feature record: CXX_FEATURE:1cxx_default_function_template_args
+    Feature record: CXX_FEATURE:1cxx_defaulted_functions
+    Feature record: CXX_FEATURE:1cxx_defaulted_move_initializers
+    Feature record: CXX_FEATURE:1cxx_delegating_constructors
+    Feature record: CXX_FEATURE:1cxx_deleted_functions
+    Feature record: CXX_FEATURE:1cxx_digit_separators
+    Feature record: CXX_FEATURE:1cxx_enum_forward_declarations
+    Feature record: CXX_FEATURE:1cxx_explicit_conversions
+    Feature record: CXX_FEATURE:1cxx_extended_friend_declarations
+    Feature record: CXX_FEATURE:1cxx_extern_templates
+    Feature record: CXX_FEATURE:1cxx_final
+    Feature record: CXX_FEATURE:1cxx_func_identifier
+    Feature record: CXX_FEATURE:1cxx_generalized_initializers
+    Feature record: CXX_FEATURE:1cxx_generic_lambdas
+    Feature record: CXX_FEATURE:1cxx_inheriting_constructors
+    Feature record: CXX_FEATURE:1cxx_inline_namespaces
+    Feature record: CXX_FEATURE:1cxx_lambdas
+    Feature record: CXX_FEATURE:1cxx_lambda_init_captures
+    Feature record: CXX_FEATURE:1cxx_local_type_template_args
+    Feature record: CXX_FEATURE:1cxx_long_long_type
+    Feature record: CXX_FEATURE:1cxx_noexcept
+    Feature record: CXX_FEATURE:1cxx_nonstatic_member_init
+    Feature record: CXX_FEATURE:1cxx_nullptr
+    Feature record: CXX_FEATURE:1cxx_override
+    Feature record: CXX_FEATURE:1cxx_range_for
+    Feature record: CXX_FEATURE:1cxx_raw_string_literals
+    Feature record: CXX_FEATURE:1cxx_reference_qualified_functions
+    Feature record: CXX_FEATURE:1cxx_relaxed_constexpr
+    Feature record: CXX_FEATURE:1cxx_return_type_deduction
+    Feature record: CXX_FEATURE:1cxx_right_angle_brackets
+    Feature record: CXX_FEATURE:1cxx_rvalue_references
+    Feature record: CXX_FEATURE:1cxx_sizeof_member
+    Feature record: CXX_FEATURE:1cxx_static_assert
+    Feature record: CXX_FEATURE:1cxx_strong_enums
+    Feature record: CXX_FEATURE:1cxx_template_template_parameters
+    Feature record: CXX_FEATURE:1cxx_thread_local
+    Feature record: CXX_FEATURE:1cxx_trailing_return_types
+    Feature record: CXX_FEATURE:1cxx_unicode_literals
+    Feature record: CXX_FEATURE:1cxx_uniform_initialization
+    Feature record: CXX_FEATURE:1cxx_unrestricted_unions
+    Feature record: CXX_FEATURE:1cxx_user_literals
+    Feature record: CXX_FEATURE:1cxx_variable_templates
+    Feature record: CXX_FEATURE:1cxx_variadic_macros
+    Feature record: CXX_FEATURE:1cxx_variadic_templates
+
+
+Detecting CXX [-std=c++14] compiler features compiled with the following output:
+Change Dir: /groups/itay_mayrose/halabikeren/biopp/bppsuite/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/gmake" "cmTC_5c5c9/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_5c5c9.dir/build.make CMakeFiles/cmTC_5c5c9.dir/build
+gmake[1]: Entering directory `/groups/itay_mayrose/halabikeren/biopp/bppsuite/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_5c5c9.dir/feature_tests.cxx.o
+/powerapps/share/mpi/openmpi-1.10.4.c7/bin/mpic++    -std=c++14 -o CMakeFiles/cmTC_5c5c9.dir/feature_tests.cxx.o -c /groups/itay_mayrose/halabikeren/biopp/bppsuite/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_5c5c9
+/powerapps/share/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_5c5c9.dir/link.txt --verbose=1
+/powerapps/share/mpi/openmpi-1.10.4.c7/bin/mpic++       -rdynamic CMakeFiles/cmTC_5c5c9.dir/feature_tests.cxx.o  -o cmTC_5c5c9 
+gmake[1]: Leaving directory `/groups/itay_mayrose/halabikeren/biopp/bppsuite/build/CMakeFiles/CMakeTmp'
+
+
+    Feature record: CXX_FEATURE:1cxx_aggregate_default_initializers
+    Feature record: CXX_FEATURE:1cxx_alias_templates
+    Feature record: CXX_FEATURE:1cxx_alignas
+    Feature record: CXX_FEATURE:1cxx_alignof
+    Feature record: CXX_FEATURE:1cxx_attributes
+    Feature record: CXX_FEATURE:1cxx_attribute_deprecated
+    Feature record: CXX_FEATURE:1cxx_auto_type
+    Feature record: CXX_FEATURE:1cxx_binary_literals
+    Feature record: CXX_FEATURE:1cxx_constexpr
+    Feature record: CXX_FEATURE:1cxx_contextual_conversions
+    Feature record: CXX_FEATURE:1cxx_decltype
+    Feature record: CXX_FEATURE:1cxx_decltype_auto
+    Feature record: CXX_FEATURE:1cxx_decltype_incomplete_return_types
+    Feature record: CXX_FEATURE:1cxx_default_function_template_args
+    Feature record: CXX_FEATURE:1cxx_defaulted_functions
+    Feature record: CXX_FEATURE:1cxx_defaulted_move_initializers
+    Feature record: CXX_FEATURE:1cxx_delegating_constructors
+    Feature record: CXX_FEATURE:1cxx_deleted_functions
+    Feature record: CXX_FEATURE:1cxx_digit_separators
+    Feature record: CXX_FEATURE:1cxx_enum_forward_declarations
+    Feature record: CXX_FEATURE:1cxx_explicit_conversions
+    Feature record: CXX_FEATURE:1cxx_extended_friend_declarations
+    Feature record: CXX_FEATURE:1cxx_extern_templates
+    Feature record: CXX_FEATURE:1cxx_final
+    Feature record: CXX_FEATURE:1cxx_func_identifier
+    Feature record: CXX_FEATURE:1cxx_generalized_initializers
+    Feature record: CXX_FEATURE:1cxx_generic_lambdas
+    Feature record: CXX_FEATURE:1cxx_inheriting_constructors
+    Feature record: CXX_FEATURE:1cxx_inline_namespaces
+    Feature record: CXX_FEATURE:1cxx_lambdas
+    Feature record: CXX_FEATURE:1cxx_lambda_init_captures
+    Feature record: CXX_FEATURE:1cxx_local_type_template_args
+    Feature record: CXX_FEATURE:1cxx_long_long_type
+    Feature record: CXX_FEATURE:1cxx_noexcept
+    Feature record: CXX_FEATURE:1cxx_nonstatic_member_init
+    Feature record: CXX_FEATURE:1cxx_nullptr
+    Feature record: CXX_FEATURE:1cxx_override
+    Feature record: CXX_FEATURE:1cxx_range_for
+    Feature record: CXX_FEATURE:1cxx_raw_string_literals
+    Feature record: CXX_FEATURE:1cxx_reference_qualified_functions
+    Feature record: CXX_FEATURE:1cxx_relaxed_constexpr
+    Feature record: CXX_FEATURE:1cxx_return_type_deduction
+    Feature record: CXX_FEATURE:1cxx_right_angle_brackets
+    Feature record: CXX_FEATURE:1cxx_rvalue_references
+    Feature record: CXX_FEATURE:1cxx_sizeof_member
+    Feature record: CXX_FEATURE:1cxx_static_assert
+    Feature record: CXX_FEATURE:1cxx_strong_enums
+    Feature record: CXX_FEATURE:1cxx_template_template_parameters
+    Feature record: CXX_FEATURE:1cxx_thread_local
+    Feature record: CXX_FEATURE:1cxx_trailing_return_types
+    Feature record: CXX_FEATURE:1cxx_unicode_literals
+    Feature record: CXX_FEATURE:1cxx_uniform_initialization
+    Feature record: CXX_FEATURE:1cxx_unrestricted_unions
+    Feature record: CXX_FEATURE:1cxx_user_literals
+    Feature record: CXX_FEATURE:1cxx_variable_templates
+    Feature record: CXX_FEATURE:1cxx_variadic_macros
+    Feature record: CXX_FEATURE:1cxx_variadic_templates
+
+
+Detecting CXX [-std=c++11] compiler features compiled with the following output:
+Change Dir: /groups/itay_mayrose/halabikeren/biopp/bppsuite/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/gmake" "cmTC_937f5/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_937f5.dir/build.make CMakeFiles/cmTC_937f5.dir/build
+gmake[1]: Entering directory `/groups/itay_mayrose/halabikeren/biopp/bppsuite/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_937f5.dir/feature_tests.cxx.o
+/powerapps/share/mpi/openmpi-1.10.4.c7/bin/mpic++    -std=c++11 -o CMakeFiles/cmTC_937f5.dir/feature_tests.cxx.o -c /groups/itay_mayrose/halabikeren/biopp/bppsuite/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_937f5
+/powerapps/share/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_937f5.dir/link.txt --verbose=1
+/powerapps/share/mpi/openmpi-1.10.4.c7/bin/mpic++       -rdynamic CMakeFiles/cmTC_937f5.dir/feature_tests.cxx.o  -o cmTC_937f5 
+gmake[1]: Leaving directory `/groups/itay_mayrose/halabikeren/biopp/bppsuite/build/CMakeFiles/CMakeTmp'
+
+
+    Feature record: CXX_FEATURE:0cxx_aggregate_default_initializers
+    Feature record: CXX_FEATURE:1cxx_alias_templates
+    Feature record: CXX_FEATURE:1cxx_alignas
+    Feature record: CXX_FEATURE:1cxx_alignof
+    Feature record: CXX_FEATURE:1cxx_attributes
+    Feature record: CXX_FEATURE:0cxx_attribute_deprecated
+    Feature record: CXX_FEATURE:1cxx_auto_type
+    Feature record: CXX_FEATURE:0cxx_binary_literals
+    Feature record: CXX_FEATURE:1cxx_constexpr
+    Feature record: CXX_FEATURE:0cxx_contextual_conversions
+    Feature record: CXX_FEATURE:1cxx_decltype
+    Feature record: CXX_FEATURE:0cxx_decltype_auto
+    Feature record: CXX_FEATURE:1cxx_decltype_incomplete_return_types
+    Feature record: CXX_FEATURE:1cxx_default_function_template_args
+    Feature record: CXX_FEATURE:1cxx_defaulted_functions
+    Feature record: CXX_FEATURE:1cxx_defaulted_move_initializers
+    Feature record: CXX_FEATURE:1cxx_delegating_constructors
+    Feature record: CXX_FEATURE:1cxx_deleted_functions
+    Feature record: CXX_FEATURE:0cxx_digit_separators
+    Feature record: CXX_FEATURE:1cxx_enum_forward_declarations
+    Feature record: CXX_FEATURE:1cxx_explicit_conversions
+    Feature record: CXX_FEATURE:1cxx_extended_friend_declarations
+    Feature record: CXX_FEATURE:1cxx_extern_templates
+    Feature record: CXX_FEATURE:1cxx_final
+    Feature record: CXX_FEATURE:1cxx_func_identifier
+    Feature record: CXX_FEATURE:1cxx_generalized_initializers
+    Feature record: CXX_FEATURE:0cxx_generic_lambdas
+    Feature record: CXX_FEATURE:1cxx_inheriting_constructors
+    Feature record: CXX_FEATURE:1cxx_inline_namespaces
+    Feature record: CXX_FEATURE:1cxx_lambdas
+    Feature record: CXX_FEATURE:0cxx_lambda_init_captures
+    Feature record: CXX_FEATURE:1cxx_local_type_template_args
+    Feature record: CXX_FEATURE:1cxx_long_long_type
+    Feature record: CXX_FEATURE:1cxx_noexcept
+    Feature record: CXX_FEATURE:1cxx_nonstatic_member_init
+    Feature record: CXX_FEATURE:1cxx_nullptr
+    Feature record: CXX_FEATURE:1cxx_override
+    Feature record: CXX_FEATURE:1cxx_range_for
+    Feature record: CXX_FEATURE:1cxx_raw_string_literals
+    Feature record: CXX_FEATURE:1cxx_reference_qualified_functions
+    Feature record: CXX_FEATURE:0cxx_relaxed_constexpr
+    Feature record: CXX_FEATURE:0cxx_return_type_deduction
+    Feature record: CXX_FEATURE:1cxx_right_angle_brackets
+    Feature record: CXX_FEATURE:1cxx_rvalue_references
+    Feature record: CXX_FEATURE:1cxx_sizeof_member
+    Feature record: CXX_FEATURE:1cxx_static_assert
+    Feature record: CXX_FEATURE:1cxx_strong_enums
+    Feature record: CXX_FEATURE:1cxx_template_template_parameters
+    Feature record: CXX_FEATURE:1cxx_thread_local
+    Feature record: CXX_FEATURE:1cxx_trailing_return_types
+    Feature record: CXX_FEATURE:1cxx_unicode_literals
+    Feature record: CXX_FEATURE:1cxx_uniform_initialization
+    Feature record: CXX_FEATURE:1cxx_unrestricted_unions
+    Feature record: CXX_FEATURE:1cxx_user_literals
+    Feature record: CXX_FEATURE:0cxx_variable_templates
+    Feature record: CXX_FEATURE:1cxx_variadic_macros
+    Feature record: CXX_FEATURE:1cxx_variadic_templates
+
+
+Detecting CXX [-std=c++98] compiler features compiled with the following output:
+Change Dir: /groups/itay_mayrose/halabikeren/biopp/bppsuite/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/gmake" "cmTC_33145/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_33145.dir/build.make CMakeFiles/cmTC_33145.dir/build
+gmake[1]: Entering directory `/groups/itay_mayrose/halabikeren/biopp/bppsuite/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_33145.dir/feature_tests.cxx.o
+/powerapps/share/mpi/openmpi-1.10.4.c7/bin/mpic++    -std=c++98 -o CMakeFiles/cmTC_33145.dir/feature_tests.cxx.o -c /groups/itay_mayrose/halabikeren/biopp/bppsuite/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_33145
+/powerapps/share/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_33145.dir/link.txt --verbose=1
+/powerapps/share/mpi/openmpi-1.10.4.c7/bin/mpic++       -rdynamic CMakeFiles/cmTC_33145.dir/feature_tests.cxx.o  -o cmTC_33145 
+gmake[1]: Leaving directory `/groups/itay_mayrose/halabikeren/biopp/bppsuite/build/CMakeFiles/CMakeTmp'
+
+
+    Feature record: CXX_FEATURE:0cxx_aggregate_default_initializers
+    Feature record: CXX_FEATURE:0cxx_alias_templates
+    Feature record: CXX_FEATURE:0cxx_alignas
+    Feature record: CXX_FEATURE:0cxx_alignof
+    Feature record: CXX_FEATURE:0cxx_attributes
+    Feature record: CXX_FEATURE:0cxx_attribute_deprecated
+    Feature record: CXX_FEATURE:0cxx_auto_type
+    Feature record: CXX_FEATURE:0cxx_binary_literals
+    Feature record: CXX_FEATURE:0cxx_constexpr
+    Feature record: CXX_FEATURE:0cxx_contextual_conversions
+    Feature record: CXX_FEATURE:0cxx_decltype
+    Feature record: CXX_FEATURE:0cxx_decltype_auto
+    Feature record: CXX_FEATURE:0cxx_decltype_incomplete_return_types
+    Feature record: CXX_FEATURE:0cxx_default_function_template_args
+    Feature record: CXX_FEATURE:0cxx_defaulted_functions
+    Feature record: CXX_FEATURE:0cxx_defaulted_move_initializers
+    Feature record: CXX_FEATURE:0cxx_delegating_constructors
+    Feature record: CXX_FEATURE:0cxx_deleted_functions
+    Feature record: CXX_FEATURE:0cxx_digit_separators
+    Feature record: CXX_FEATURE:0cxx_enum_forward_declarations
+    Feature record: CXX_FEATURE:0cxx_explicit_conversions
+    Feature record: CXX_FEATURE:0cxx_extended_friend_declarations
+    Feature record: CXX_FEATURE:0cxx_extern_templates
+    Feature record: CXX_FEATURE:0cxx_final
+    Feature record: CXX_FEATURE:0cxx_func_identifier
+    Feature record: CXX_FEATURE:0cxx_generalized_initializers
+    Feature record: CXX_FEATURE:0cxx_generic_lambdas
+    Feature record: CXX_FEATURE:0cxx_inheriting_constructors
+    Feature record: CXX_FEATURE:0cxx_inline_namespaces
+    Feature record: CXX_FEATURE:0cxx_lambdas
+    Feature record: CXX_FEATURE:0cxx_lambda_init_captures
+    Feature record: CXX_FEATURE:0cxx_local_type_template_args
+    Feature record: CXX_FEATURE:0cxx_long_long_type
+    Feature record: CXX_FEATURE:0cxx_noexcept
+    Feature record: CXX_FEATURE:0cxx_nonstatic_member_init
+    Feature record: CXX_FEATURE:0cxx_nullptr
+    Feature record: CXX_FEATURE:0cxx_override
+    Feature record: CXX_FEATURE:0cxx_range_for
+    Feature record: CXX_FEATURE:0cxx_raw_string_literals
+    Feature record: CXX_FEATURE:0cxx_reference_qualified_functions
+    Feature record: CXX_FEATURE:0cxx_relaxed_constexpr
+    Feature record: CXX_FEATURE:0cxx_return_type_deduction
+    Feature record: CXX_FEATURE:0cxx_right_angle_brackets
+    Feature record: CXX_FEATURE:0cxx_rvalue_references
+    Feature record: CXX_FEATURE:0cxx_sizeof_member
+    Feature record: CXX_FEATURE:0cxx_static_assert
+    Feature record: CXX_FEATURE:0cxx_strong_enums
+    Feature record: CXX_FEATURE:1cxx_template_template_parameters
+    Feature record: CXX_FEATURE:0cxx_thread_local
+    Feature record: CXX_FEATURE:0cxx_trailing_return_types
+    Feature record: CXX_FEATURE:0cxx_unicode_literals
+    Feature record: CXX_FEATURE:0cxx_uniform_initialization
+    Feature record: CXX_FEATURE:0cxx_unrestricted_unions
+    Feature record: CXX_FEATURE:0cxx_user_literals
+    Feature record: CXX_FEATURE:0cxx_variable_templates
+    Feature record: CXX_FEATURE:0cxx_variadic_macros
+    Feature record: CXX_FEATURE:0cxx_variadic_templates
