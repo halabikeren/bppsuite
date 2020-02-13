@@ -242,7 +242,7 @@ int main(int args, char** argv)
 		ApplicationTools::displayResult("Current diff", TextTools::toString((currLogLikelihood-prevLogLikelihood), 15));
 	} while (currLogLikelihood - prevLogLikelihood > 0.01);
 	double nullLogl = currLogLikelihood;
-	cout << "iteraive optimzation complete" << endl;
+	cout << "iterative optimzation complete" << endl;
 	ApplicationTools::displayResult("Log likelihood", TextTools::toString(nullLogl, 15));
     bppml.done();
 
