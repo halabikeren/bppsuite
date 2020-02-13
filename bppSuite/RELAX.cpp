@@ -70,8 +70,6 @@ double reportScalingFactor(TreeLikelihood* tl, double origTreeLength)
             treeSize = treeSize + nodes[b]->getDistanceToFather();
         }
     }
-	cout << "\n\norigTreeLength: " << origTreeLength << endl; // debug
-	cout << "treeSize: " << treeSize << endl; // debug
     double scalingFactor = treeSize / origTreeLength;
     cout << "The tree has been scaled by a sequence scaling factor of: " << scalingFactor << endl;
 	return scalingFactor;
@@ -268,7 +266,7 @@ int main(int args, char** argv)
 		ApplicationTools::displayResult("Current diff", TextTools::toString((currLogLikelihood-prevLogLikelihood), 15));
 	} while (currLogLikelihood - prevLogLikelihood > 0.01);
 	double nullLogl = currLogLikelihood;
-	cout << "iteraive optimzation complete" << endl;
+	cout << "iterative optimzation complete" << endl;
 	ApplicationTools::displayResult("Log likelihood", TextTools::toString(nullLogl, 15));
     bppml.done();
 
@@ -297,7 +295,7 @@ int main(int args, char** argv)
 		currLogLikelihood = -tl->getValue();
 		ApplicationTools::displayResult("Current diff", TextTools::toString((currLogLikelihood-prevLogLikelihood), 15));
 	} while (currLogLikelihood - prevLogLikelihood > 0.01);
-	cout << "iteraive optimzation complete" << endl;
+	cout << "iterative optimzation complete" << endl;
 	double alternativeLogl = currLogLikelihood;
 	ApplicationTools::displayResult("Log likelihood", TextTools::toString(alternativeLogl, 15));
     bppml.done();
