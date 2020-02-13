@@ -70,6 +70,8 @@ double reportScalingFactor(TreeLikelihood* tl, double origTreeLength)
             treeSize = treeSize + nodes[b]->getDistanceToFather();
         }
     }
+	cout << "\n\norigTreeLength: " << origTreeLength << endl; // debug
+	cout << "treeSize: " << treeSize << endl; // debug
     double scalingFactor = treeSize / origTreeLength;
     cout << "The tree has been scaled by a sequence scaling factor of: " << scalingFactor << endl;
 	return scalingFactor;
