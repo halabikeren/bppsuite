@@ -77,31 +77,6 @@ double reportScalingFactor(TreeLikelihood* tl, double origTreeLength)
 	return scalingFactor;
 }
 
-RNonHomogeneousMixedTreeLikelihood* scaleLikelihoodTree(DiscreteRatesAcrossSitesTreeLikelihood* tl, double factor)
-{
-    // get a new tree and scale it
-	const Tree& origTree = tl->getTree(); // the character tree is taken because it was not affected by any previous scaling
-	Tree* newTree = origTree.clone();
-	(dynamic_cast<TreeTemplate<Node>*>(newTree))->scaleTree(factor);
-    
-	// switch the new tree with the ols tree in the sequence likelihood function
-    
-	// extract the input for the next SequenceTreeLikelihood from the previouts one
-    const VectorSiteContainer* sequenceData = dynamic_cast<const VectorSiteContainer*>(tl->getData()->clone());
-    MixedSubstitutionModelSet* sequenceModel = dynamic_cast<MixedSubstitutionModelSet*>(dynamic_cast<RNonHomogeneousMixedTreeLikelihood*>(tl)->getSubstitutionModelSet());
-    DiscreteDistribution* rDist = RASTools::getPosteriorRateDistribution(*tl);
-
-    // create the new TreeLikelihood with the scaled tree
-    RNonHomogeneousMixedTreeLikelihood* newTl = new RNonHomogeneousMixedTreeLikelihood(*newTree, *sequenceData, sequenceModel, rDist, true, true);
-    newTl->initialize();
-
-    // delete the previous SequenceTreeLikelihood instance
-    if (tl) delete tl;
-	
-	// return the new tree likelihood
-	return newTl;
-}
-
 RNonHomogeneousMixedTreeLikelihood* getModelParameters(DiscreteRatesAcrossSitesTreeLikelihood* tl, MixedSubstitutionModelSet* modelSet, double origTreeLength)
 {
   ParameterList parameters;
@@ -121,8 +96,7 @@ RNonHomogeneousMixedTreeLikelihood* getModelParameters(DiscreteRatesAcrossSitesT
   }
   
   double scalingFactor = reportScalingFactor(tl, origTreeLength);
-  RNonHomogeneousMixedTreeLikelihood* newTl = scaleLikelihoodTree(tl, scalingFactor);
-  return newTl;
+  return tl;
 }
 
 VectorSiteContainer* process_alignment(Alphabet* alphabet, BppApplication bppml)

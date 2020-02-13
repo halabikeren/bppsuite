@@ -14,6 +14,13 @@
 #include <Bpp/Text/KeyvalTools.h>
 #include <Bpp/Numeric/Function/BrentOneDimension.h>
 #include <Bpp/Numeric/Function/PowellMultiDimensions.h>
+#include <Bpp/Numeric/ParameterList.h>
+#include <Bpp/Numeric/Function/BfgsMultiDimensions.h>
+#include <Bpp/Numeric/Function/ReparametrizationFunctionWrapper.h>
+#include <Bpp/Numeric/Function/ThreePointsNumericalDerivative.h>
+#include <Bpp/Numeric/Function/ConjugateGradientMultiDimensions.h>
+#include <Bpp/Numeric/Function/TwoPointsNumericalDerivative.h>
+#include <Bpp/Numeric/Function/DownhillSimplexMethod.h>
 
 // From bpp-seq:
 #include <Bpp/Seq/Alphabet/Alphabet.h>
@@ -49,6 +56,7 @@
 #include <Bpp/Phyl/Io/BppOFrequenciesSetFormat.h>
 #include <Bpp/Phyl/Mapping/StochasticMapping.h>
 #include <Bpp/Phyl/Likelihood/JointLikelihoodFunction.h>
+#include <Bpp/Phyl/Likelihood/PseudoNewtonOptimizer.h>
 
 // From the STL:
 #include <iostream>
@@ -97,7 +105,7 @@ VectorSiteContainer *processCharacterData(BppApplication *bppml, const BinaryAlp
 
 /******************************************************************************/
 
-VectorSiteContainer *processCodonAlignment(BppApplication *bppml, const CodonAlphabet *codonAlphabet)
+VectorSiteContainer *processSequenceData(BppApplication *bppml, const CodonAlphabet *codonAlphabet)
 {
   VectorSiteContainer *allSites = SequenceApplicationTools::getSiteContainer(codonAlphabet, bppml->getParams());            // here, gaps will be converted to unknown characters
   VectorSiteContainer *sites = SequenceApplicationTools::getSitesToAnalyse(*allSites, bppml->getParams(), "", true, false); // convert the alignemnt to condensed format of unique sites
@@ -125,15 +133,6 @@ Tree *processTree(BppApplication *bppml)
 {
   Tree *tree = PhylogeneticsApplicationTools::getTree(bppml->getParams());
   giveNamesToInternalNodes(tree);
-
-  string initBrLenMethod = ApplicationTools::getStringParameter("init.brlen.method", bppml->getParams(), "Input", "", true, 1); // process tree branches lengths
-  string cmdName;
-  map<string, string> cmdArgs;
-  KeyvalTools::parseProcedure(initBrLenMethod, cmdName, cmdArgs); // this line process cmdName - which dictates weather the tree should be processed as is, or ultrameterized
-  if (cmdName == "Clock")                                         // if needed, turn the tree into an ultrametric tree
-  {
-    TreeTools::convertToClockTree(*tree, tree->getRootId(), true);
-  }
   return tree;
 }
 
@@ -142,11 +141,7 @@ Tree *processTree(BppApplication *bppml)
 TransitionModel *setCharacterModel(BppApplication *bppml, VectorSiteContainer *charData, const BinaryAlphabet *alphabet, Tree *tree, DRTreeParsimonyScore *mpData)
 {
   // create the model
-  // TO DO: ADD HERE PROCESSING OF INITIAL CHARACTER MODEL PARAMETERS AND PADD TO CONSTRUCTOR
-  // extract the user initial value of k for potential later use
-  double init_mu = ApplicationTools::getDoubleParameter("character_model.mu", bppml->getParams(), 1);
-  double init_pi0 = ApplicationTools::getDoubleParameter("character_model.pi0", bppml->getParams(), 0.5);
-  SubstitutionModel *model = new TwoParameterBinarySubstitutionModel(alphabet, init_mu, init_pi0);
+  SubstitutionModel *model = new TwoParameterBinarySubstitutionModel(alphabet);
 
   // compute the maximum parsimony score and set the lower and upper bounds on mu (=rate) as mp/tree_size, 2*mp/tree_size
   VDouble treeBranches = dynamic_cast<TreeTemplate<Node> *>(tree)->getBranchLengths();
@@ -169,13 +164,11 @@ TransitionModel *setCharacterModel(BppApplication *bppml, VectorSiteContainer *c
   }
   else
   {
-    mu = ApplicationTools::getDoubleParameter("character_model.mu", bppml->getParams(), 10);
-    model->setParameterValue(string("mu"), mu);
-	double pi0 = ApplicationTools::getDoubleParameter("character_model.pi0", bppml->getParams(), 0.5);
-	map<int, double> frequencies;
-    frequencies[0] = pi0;
-    frequencies[1] = 1 - pi0;
-    model->setFreq(frequencies);
+	double init_mu = ApplicationTools::getDoubleParameter("character_model.mu", bppml->getParams(), 1);
+    double init_pi0 = ApplicationTools::getDoubleParameter("character_model.pi0", bppml->getParams(), 0.5);
+    model->setParameterValue(string("mu"), init_mu);
+	model->setParameterValue(string("pi0"), init_pi0);
+	mu = init_mu;
   }
   if (mu < characterMuLb)
   {
@@ -187,8 +180,9 @@ TransitionModel *setCharacterModel(BppApplication *bppml, VectorSiteContainer *c
   }
   else
   {
-    dynamic_cast<TwoParameterBinarySubstitutionModel *>(model)->setMuBounds(characterMuLb, characterMuUb);
+	dynamic_cast<TwoParameterBinarySubstitutionModel *>(model)->setMuBounds(characterMuLb, characterMuUb);
   }
+  
   return dynamic_cast<TransitionModel *>(model);
 }
 
@@ -372,7 +366,7 @@ void optimizeAlternativeCharacterModelByGrid(map<string, double> &optimalValues,
   Parameter pi0 = jointlikelihoodFunction->getParameter("TwoParameterBinary.pi0");
   double currentMu = mu.getValue();
   double currentPi0 = pi0.getValue();
-  double currentLogL = -1 * jointlikelihoodFunction->getValue();
+  double currentLogL = -jointlikelihoodFunction->getValue();
   optimalValues["mu"] = currentMu;
   optimalValues["pi0"] = currentPi0;
   optimalValues["log_likelihood"] = currentLogL;
@@ -390,7 +384,7 @@ void optimizeAlternativeCharacterModelByGrid(map<string, double> &optimalValues,
         paramsToUpdate.addParameter(mu);
         paramsToUpdate.addParameter(pi0);
         jointlikelihoodFunction->setParametersValues(paramsToUpdate); // wrong values of parameters are set here. trigger likelihood computation
-        currentLogL = -1 * jointlikelihoodFunction->getValue();
+        currentLogL = -jointlikelihoodFunction->getValue();
         if (currentLogL > optimalValues["log_likelihood"])
         {
           optimalValues["log_likelihood"] = currentLogL;
@@ -413,7 +407,7 @@ void optimizeAlternativeCharacterModelByGrid(map<string, double> &optimalValues,
       paramsToUpdate.addParameter(mu);
       paramsToUpdate.addParameter(pi0);
       jointlikelihoodFunction->setParametersValues(paramsToUpdate); // wrong values of parameters are set here. trigger likelihood computation
-      currentLogL = -1 * jointlikelihoodFunction->getValue();
+      currentLogL = -jointlikelihoodFunction->getValue();
       if (currentLogL > optimalValues["log_likelihood"])
       {
         optimalValues["log_likelihood"] = currentLogL;
@@ -422,55 +416,52 @@ void optimizeAlternativeCharacterModelByGrid(map<string, double> &optimalValues,
       }
     }
   }
+  // set the optimial values to the model
+  jointlikelihoodFunction->setParameterValue("TwoParameterBinary.mu", optimalValues["mu"]);
+  jointlikelihoodFunction->setParameterValue("TwoParameterBinary.pi0", optimalValues["pi0"]);
 }
 
 /******************************************************************************/
 
-void optimizeAlternativeCharacterModelByBrent(map<string, double> &optimalValues, JointLikelihoodFunction *jointlikelihoodFunction, TransitionModel *characterModel, uint verbose = 1)
+void optimizeAlternativeCharacterModelByOneDimBrent(map<string, double> &optimalValues, JointLikelihoodFunction *jointlikelihoodFunction, TransitionModel *characterModel, uint verbose = 1)
 {
   cout << "* Optimizing joint likelihood function with respect to character parameters using one dimentional brent *\n" << endl;
-  double prevLogLikelihood = -jointlikelihoodFunction->getValue();
-  double currLogLikelihood = -jointlikelihoodFunction->getValue();
-  size_t index = 1;
+
   // set the brent one dimontional optimizer
-  BrentOneDimension* characterParametersOptimizer = new BrentOneDimension(jointlikelihoodFunction);
+  BrentOneDimension *characterParametersOptimizer = new BrentOneDimension(jointlikelihoodFunction);
   characterParametersOptimizer->setBracketing(BrentOneDimension::BRACKET_INWARD);
-  characterParametersOptimizer->getStopCondition()->setTolerance(0.01); // set the tolerance to be slighly less strict to account for the instability of the joint likelihood function
-  characterParametersOptimizer->setConstraintPolicy(AutoParameter::CONSTRAINTS_AUTO);
+  characterParametersOptimizer->getStopCondition()->setTolerance(0.01);               // set the tolerance to be slighly less strict to account for the instability of the joint likelihood function
+  characterParametersOptimizer->setConstraintPolicy(AutoParameter::CONSTRAINTS_AUTO); // 3.4.19 - keren - OTHERWISE, CONSTRAINT IS EXCEEDED
   characterParametersOptimizer->setProfiler(0);
   characterParametersOptimizer->setMessageHandler(0);
   characterParametersOptimizer->setVerbose(1);
   ParameterList pi0, mu;
-  mu.addParameter(jointlikelihoodFunction->getParameter("TwoParameterBinary.mu"));
-  const IntervalConstraint *muBounds = dynamic_cast<const IntervalConstraint *>(jointlikelihoodFunction->getParameter("TwoParameterBinary.mu").getConstraint());
   pi0.addParameter(jointlikelihoodFunction->getParameter("TwoParameterBinary.pi0"));
   const IntervalConstraint *pi0Bounds = dynamic_cast<const IntervalConstraint *>(jointlikelihoodFunction->getParameter("TwoParameterBinary.pi0").getConstraint());
-  
+  mu.addParameter(jointlikelihoodFunction->getParameter("TwoParameterBinary.mu"));
+  const IntervalConstraint *muBounds = dynamic_cast<const IntervalConstraint *>(jointlikelihoodFunction->getParameter("TwoParameterBinary.mu").getConstraint());
+  double prevLogLikelihood, currLogLikelihood;
   do
   {
-    cout << "Optimization cycle: " << TextTools::toString(index) << endl;
-    index = index + 1;
-    prevLogLikelihood = -jointlikelihoodFunction->getValue();
+	  prevLogLikelihood = -jointlikelihoodFunction->getValue();
+	  
+	  // optimize the joint model with respect to pi0
+	  characterParametersOptimizer->setInitialInterval(pi0Bounds->getLowerBound(), pi0Bounds->getUpperBound()); // search within stricter bounds that the actual ones of pi0 to avoid failute of stochasitc mapping
+	  characterParametersOptimizer->init(pi0);
+	  characterParametersOptimizer->optimize();
 
-    // optimize the joint model with respect to pi0
-    characterParametersOptimizer->setInitialInterval(pi0Bounds->getLowerBound(), pi0Bounds->getUpperBound()); // search within stricter bounds that the actual ones of pi0 to avoid failute of stochasitc mapping
-    characterParametersOptimizer->init(pi0);
-    characterParametersOptimizer->optimize();
-  
-    // optimize the model with respect to the mu
-    characterParametersOptimizer->setInitialInterval(muBounds->getLowerBound() + 0.0001, muBounds->getUpperBound() - 0.0001);
-    characterParametersOptimizer->init(mu);
-    characterParametersOptimizer->optimize();
+	  optimalValues["pi0"] = jointlikelihoodFunction->getParameter("TwoParameterBinary.pi0").getValue();
 
-    optimalValues["pi0"] = jointlikelihoodFunction->getParameter("TwoParameterBinary.pi0").getValue();
-    optimalValues["mu"] = jointlikelihoodFunction->getParameter("TwoParameterBinary.mu").getValue();
-    optimalValues["log_likelihood"] = jointlikelihoodFunction->getCharacterLikelihoodFunction()->getValue();
-
-    currLogLikelihood = -jointlikelihoodFunction->getValue();
-    ApplicationTools::displayResult("Current log likelihood", TextTools::toString(-currLogLikelihood, 15));
-    ApplicationTools::displayResult("Current diff", TextTools::toString((currLogLikelihood-prevLogLikelihood), 15));
-
-  } while (currLogLikelihood - prevLogLikelihood > 0.01);
+	  // optimize the model with respect to the mu
+	  characterParametersOptimizer->setInitialInterval(muBounds->getLowerBound() + 0.0001, muBounds->getUpperBound() - 0.0001);
+	  characterParametersOptimizer->init(mu);
+	  characterParametersOptimizer->optimize();
+	  optimalValues["mu"] = jointlikelihoodFunction->getParameter("TwoParameterBinary.mu").getValue();
+	  optimalValues["log_likelihood"] = jointlikelihoodFunction->getCharacterLikelihoodFunction()->getValue();
+	  
+	  currLogLikelihood = -jointlikelihoodFunction->getValue();
+  } while (abs(currLogLikelihood - prevLogLikelihood) > 0.000001);
+  ApplicationTools::displayResult("Character log Likelihood after brent: ", TextTools::toString(-jointlikelihoodFunction->getCharacterLikelihoodFunction()->getValue(), 15));
   delete characterParametersOptimizer;
 }
 
@@ -519,6 +510,83 @@ void optimizeAlternativeCharacterModelByPowell(map<string, double> &optimalValue
 }
 
 /******************************************************************************/
+
+void optimizeAlternativeCharaterModelMultiDim(JointLikelihoodFunction* jointlikelihoodfunction, BppApplication *bppml)
+{
+  ParameterList parametersToEstimate = jointlikelihoodfunction->getCharacterLikelihoodFunction()->getModelForSite(0,0)->getParameters();
+
+  double tolerance = ApplicationTools::getDoubleParameter("optimization.tolerance", bppml->getParams(), .000001);
+  unsigned int nbEvalMax = ApplicationTools::getParameter<unsigned int>("optimization.max_number_f_eval", bppml->getParams(), 1000000);
+
+  string mhPath = ApplicationTools::getAFilePath("optimization.character.message_handler", bppml->getParams(), false, false, "", false, "none", 1);
+  OutputStream* messageHandler =
+  (mhPath == "none") ? 0 :
+  (mhPath == "std") ? ApplicationTools::message.get() :
+  new StlOutputStream(new ofstream(mhPath.c_str(), ios::out));
+
+  string prPath = ApplicationTools::getAFilePath("optimization.character.profiler", bppml->getParams(), false, false, "", false, "none", 1);
+  OutputStream* profiler =
+  (prPath == "none") ? 0 :
+  (prPath == "std") ? ApplicationTools::message.get() :
+  new StlOutputStream(new ofstream(prPath.c_str(), ios::out));
+  if (profiler)
+    profiler->setPrecision(20);
+
+  unsigned int optVerbose = ApplicationTools::getParameter<unsigned int>("optimization.verbose", bppml->getParams(), 2, "", false, 1);
+
+  string order  = ApplicationTools::getStringParameter("optimization.method.derivatives", bppml->getParams(), "Gradient", "", true, 1);
+  string optMethod;
+  if (order == "Gradient")
+  {
+    optMethod = OptimizationTools::OPTIMIZATION_GRADIENT;
+  }
+  else if (order == "Newton")
+  {
+    optMethod = OptimizationTools::OPTIMIZATION_NEWTON;
+  }
+  else
+    throw Exception("Option '" + order + "' is not known for 'optimization.method.derivatives'.");
+
+  AbstractNumericalDerivative* fun = 0;
+
+  // Build optimizer:
+  Optimizer* optimizer = 0;
+  if (optMethod == OptimizationTools::OPTIMIZATION_GRADIENT)
+  {
+    fun = new TwoPointsNumericalDerivative(jointlikelihoodfunction);
+    fun->setInterval(0.0000001);
+    optimizer = new ConjugateGradientMultiDimensions(fun);
+  }
+  else if (optMethod == OptimizationTools::OPTIMIZATION_NEWTON)
+  {
+    fun = new ThreePointsNumericalDerivative(jointlikelihoodfunction);
+    fun->setInterval(0.0001);
+    optimizer = new PseudoNewtonOptimizer(fun);
+  }
+  else
+    throw Exception("OptimizationTools::optimizeBranchLengthsParameters. Unknown optimization method: " + optMethod);
+
+  // Numerical derivatives:
+  fun->setParametersToDerivate(parametersToEstimate.getParameterNames());
+
+  optimizer->setVerbose(optVerbose);
+  optimizer->setProfiler(profiler);
+  optimizer->setMessageHandler(messageHandler);
+  optimizer->setMaximumNumberOfEvaluations(nbEvalMax);
+  optimizer->getStopCondition()->setTolerance(tolerance);
+
+  // Optimize TreeLikelihood function:
+  optimizer->setConstraintPolicy(AutoParameter::CONSTRAINTS_AUTO);
+  optimizer->init(parametersToEstimate);
+  optimizer->optimize();
+
+  // We're done.
+  unsigned int n = optimizer->getNumberOfEvaluations();
+  ApplicationTools::displayResult("# TL evaluations", TextTools::toString(n));
+  delete optimizer;
+}
+
+/******************************************************************************/
 /*********************************** Main *************************************/
 /******************************************************************************/
 
@@ -532,14 +600,21 @@ int main(int args, char **argv)
   try
   {
 	  
-	// set random seed
-	double seed = RandomTools::giveRandomNumberBetweenZeroAndEntry(1.0);
-	cout << "seed=" << seed << endl;
-	RandomTools::setSeed(static_cast<long>(seed));
 
     /* process input from params file */
     BppApplication traitRELAX(args, argv, "traitRELAX");
     uint verbose = static_cast<unsigned int>(ApplicationTools::getIntParameter("verbose", traitRELAX.getParams(), 1));
+
+    // process seed from parameter file, if exists
+    double seed;
+    seed = ApplicationTools::getDoubleParameter("seed", traitRELAX.getParams(), 1);
+    if (seed == 1)
+    {
+      // else, choose a random seed
+      seed = RandomTools::giveRandomNumberBetweenZeroAndEntry(1.0);
+    }
+    cout << "seed=" << seed << endl;
+    RandomTools::setSeed(static_cast<long>(seed));
 
     /* process character data */
     const BinaryAlphabet *balpha = new BinaryAlphabet();
@@ -547,11 +622,10 @@ int main(int args, char **argv)
 
     /* process tree */
     Tree *tree = processTree(&traitRELAX);
-    vector<Node *> nodes = (dynamic_cast<TreeTemplate<Node> *>(tree))->getNodes();
 
     /* process codon alignment */
     const CodonAlphabet *calpha = getCodonAlphabet();
-    VectorSiteContainer *seqData = processCodonAlignment(&traitRELAX, calpha);
+    VectorSiteContainer *seqData = processSequenceData(&traitRELAX, calpha);
 
     /* compute the maximum parsimony  for the purpose of setting bounds on the rate parameter of the character model and an intial tree partition for the starting point */
     DRTreeParsimonyScore *mpData = new DRTreeParsimonyScore(*tree, dynamic_cast<const SiteContainer &>(*charData));
@@ -567,7 +641,8 @@ int main(int args, char **argv)
 
     bool debug = ApplicationTools::getBooleanParameter("joint.likelihood.debug", traitRELAX.getParams(), false, "", true, 1);
     JointLikelihoodFunction *traitRELAXLikelihoodFunction = new JointLikelihoodFunction(&traitRELAX, tree, charData, charModel, seqData, seqModel, rDist, debug);
-    cout << "\n**** Initial parameters ****" << endl;
+	
+	cout << "\n**** Initial parameters ****" << endl;
     map<string, double> userInitialValues = traitRELAXLikelihoodFunction->getModelParameters();
     ParameterList emptyParametersList;
 
@@ -577,70 +652,29 @@ int main(int args, char **argv)
     traitRELAXLikelihoodFunction->setHypothesis(JointLikelihoodFunction::Hypothesis(0));
     traitRELAXLikelihoodFunction->setOptimizationScope(JointLikelihoodFunction::OptimizationScope(3));
     traitRELAXLikelihoodFunction->fireParameterChanged(emptyParametersList);
-    traitRELAX.done();
-
-    /* report the log likelihood of the null model */
-    cout << "\n**** Null model after optimization ****\n" << endl;
-    traitRELAXLikelihoodFunction->getModelParameters();
+    double nullLogl = -traitRELAXLikelihoodFunction->getValue();
     vector<double> nullLoglBySite = traitRELAXLikelihoodFunction->getLikelihoodForEachSite();
-    double nullLogl = -1* traitRELAXLikelihoodFunction->getValue();
+    traitRELAX.done();
 
     /* fit the alternative model: sequencial optimization of the character model and then sequence model, given an expected history based on the character model */
     cout << "\n**** Alternative model fitting ****" << endl;
     traitRELAXLikelihoodFunction->setHypothesis(JointLikelihoodFunction::Hypothesis(1));
     traitRELAXLikelihoodFunction->setOptimizationScope(JointLikelihoodFunction::OptimizationScope(2));
-
     // set starting point by optimizing sequence paTotal execution time:rameters why relaxing the constraint on the selection intensity parameter, so that the maximum parsmony based partiton will be considered
-    cout << "\n** Setting starting point by relaxing constraint on the selection intensity parameter for model2 and using maximum parsimony based partition **\n" << endl;
+    cout << "\nStarting point optimization: maximum parsimony partition" << endl;
     traitRELAX.startTimer();
-    // optimize with starting point 1: null inference result
-    cout << "Starting point 1: null fitting result" << endl;
-    RNonHomogeneousMixedTreeLikelihood *sequenceTl = traitRELAXLikelihoodFunction->getSequenceLikelihoodFunction();
-    OptimizationTools::optimizeTreeScale(sequenceTl, 0.000001, 1000000, ApplicationTools::message.get(), ApplicationTools::message.get(), 0);
-    PhylogeneticsApplicationTools::optimizeParameters(sequenceTl, sequenceTl->getParameters(), traitRELAX.getParams());
-    map<string, double> nullSpResult = traitRELAXLikelihoodFunction->getModelParameters();
-    // optimize with starting point 2: user input values
-    cout << "\nStarting point 2: user input values" << endl;
-    traitRELAXLikelihoodFunction->scaleSequenceTree(1);
-    sequenceTl = traitRELAXLikelihoodFunction->getSequenceLikelihoodFunction();
-    for (map<string, double>::iterator it = userInitialValues.begin(); it != userInitialValues.end(); it++)
-    {
-      if ((it->first.find("RELAX") != std::string::npos))
-      {
-        traitRELAXLikelihoodFunction->setParameterValue(it->first, it->second);
-      }
-    }
-    OptimizationTools::optimizeTreeScale(sequenceTl, 0.000001, 1000000, ApplicationTools::message.get(), ApplicationTools::message.get(), 0);
-    PhylogeneticsApplicationTools::optimizeParameters(sequenceTl, sequenceTl->getParameters(), traitRELAX.getParams());
-    map<string, double> userSpResult = traitRELAXLikelihoodFunction->getModelParameters(true);
-    // set the initial values according to the winning starting point
-    string winningSp = "user initial values";
-    map<string, double> winningSpValues = userSpResult;
-    if (-1.0 * userSpResult["Overall Log likelihood"] < -1.0 * nullSpResult["Overall Log likelihood"])
-    {
-      winningSp = "null fitting result";
-      winningSpValues = nullSpResult;
-    }
-    cout << "\n\nWinning starting point: " << winningSp << endl;
-    for (map<string, double>::iterator it = winningSpValues.begin(); it != winningSpValues.end(); it++)
-    {
-      if ((it->first.find("RELAX") != std::string::npos))
-      {
-        traitRELAXLikelihoodFunction->setParameterValue(it->first, it->second);
-      }
-      else if (it->first.compare("sequenceScalingFactor") == 0)
-      {
-        traitRELAXLikelihoodFunction->scaleSequenceTree(it->second);
-      }
-    }
+	traitRELAXLikelihoodFunction->fireParameterChanged(emptyParametersList);
+	
     // compute the initial log likelihood
     cout << "* Starting iterative two-layer optimzation of the alternative model *" << endl;
     traitRELAXLikelihoodFunction->getSequenceLikelihoodFunction()->computeTreeLikelihood();
     // report final values and complete step
     traitRELAXLikelihoodFunction->getModelParameters(true);
+    double initialAltLogl = -traitRELAXLikelihoodFunction->getValue();
     traitRELAX.done();
+
     traitRELAXLikelihoodFunction->setOptimizationScope(JointLikelihoodFunction::OptimizationScope(0)); // no optimization of sequece parameters is required at these stage
-    double currentAlternativeOverallLogL = -1.0 * traitRELAXLikelihoodFunction->getValue();
+    double currentAlternativeOverallLogL = -traitRELAXLikelihoodFunction->getValue();
     double previousAlternativeOverallLogL = currentAlternativeOverallLogL;
     map<string, double> bestModelParameters = traitRELAXLikelihoodFunction->getModelParameters(false);
     double bestLogl = currentAlternativeOverallLogL;
@@ -652,51 +686,51 @@ int main(int args, char **argv)
       /* optimize the character model while fixing the sequence model with respect to the joint model */
       cout << "\n** Step 1: fix sequence model parameters, optimize character model parameters **\n" << endl;
       traitRELAXLikelihoodFunction->setOptimizationScope(JointLikelihoodFunction::OptimizationScope(0)); // no optimization of sequece parameters is required at these stage
-      string characterOptimizationMethod = ApplicationTools::getStringParameter("optimization.character_method", traitRELAX.getParams(), "brent");
+      string characterOptimizationMethod = ApplicationTools::getStringParameter("optimization.character_method", traitRELAX.getParams(), "FullD(derivatives=Newton)");
       map<string, double> optimalCharacterParameters;
-      int useOneDimentionOpt = ApplicationTools::getIntParameter("optimization.character.one.dimension", traitRELAX.getParams(), 1);
       optimalCharacterParameters.clear();
       if (characterOptimizationMethod.compare("grid") == 0)
       {
         uint gridSize = static_cast<unsigned int>(ApplicationTools::getIntParameter("optimization.grid_size", traitRELAX.getParams(), 10));
         optimizeAlternativeCharacterModelByGrid(optimalCharacterParameters, traitRELAXLikelihoodFunction, charModel, verbose, gridSize);
       }
-      else if (useOneDimentionOpt == 1)// use brent
-      {
-        optimizeAlternativeCharacterModelByBrent(optimalCharacterParameters, traitRELAXLikelihoodFunction, charModel, verbose);
-      }
+	  else if (characterOptimizationMethod.compare("oneDimBrent") == 0)
+	  {
+		  optimizeAlternativeCharacterModelByOneDimBrent(optimalCharacterParameters, traitRELAXLikelihoodFunction, charModel, 1);
+	  }
+	  else if (characterOptimizationMethod.compare("powell") == 0)
+	  {
+		  optimizeAlternativeCharacterModelByPowell(optimalCharacterParameters, traitRELAXLikelihoodFunction, charModel, verbose);
+	  }
       else
       {
-        optimizeAlternativeCharacterModelByPowell(optimalCharacterParameters, traitRELAXLikelihoodFunction, charModel, verbose);
+        optimizeAlternativeCharaterModelMultiDim(traitRELAXLikelihoodFunction, &traitRELAX);
       }
       
-
       /* report optimal character parameters */
       cout << "\n** Optimal character parameters: **\n" << endl;
-      ApplicationTools::displayResult("Mu", TextTools::toString(optimalCharacterParameters["mu"]));
-      ApplicationTools::displayResult("Pi0", TextTools::toString(optimalCharacterParameters["pi0"]));
+      ApplicationTools::displayResult("Mu", TextTools::toString(traitRELAXLikelihoodFunction->getParameterValue("TwoParameterBinary.mu")));
+      ApplicationTools::displayResult("Pi0", TextTools::toString(traitRELAXLikelihoodFunction->getParameterValue("TwoParameterBinary.pi0")));
       traitRELAX.done();
 
       /* optimize the sequence model while fixing the character model with respect to the joint model */
-      cout << "\n** Step 2: fix character model parameters, optimize sequence model parameters **\n"
-           << endl;
+      cout << "\n** Step 2: fix character model parameters, optimize sequence model parameters **\n" << endl;
       traitRELAX.startTimer();
       traitRELAXLikelihoodFunction->setOptimizationScope(JointLikelihoodFunction::OptimizationScope(2)); // trigger optimization of the model
       traitRELAXLikelihoodFunction->fireParameterChanged(emptyParametersList);
-      map<string, double> currentmodelParameters = traitRELAXLikelihoodFunction->getModelParameters();
+      map<string, double> currentmodelParameters = traitRELAXLikelihoodFunction->getModelParameters(false);
       previousAlternativeOverallLogL = currentAlternativeOverallLogL;
-      currentAlternativeOverallLogL = -1 * traitRELAXLikelihoodFunction->getValue();
+      currentAlternativeOverallLogL = -traitRELAXLikelihoodFunction->getValue();
       traitRELAX.done();
       if (currentAlternativeOverallLogL > bestLogl)
       {
         bestModelParameters = currentmodelParameters;
-        bestLogl = -1.0 * bestModelParameters["Overall Log likelihood"];
+        bestLogl = -bestModelParameters["Overall Log likelihood"];
       }
       ApplicationTools::displayResult("Optimization cycle", TextTools::toString(optimizationCyclesNum + 1));
       ApplicationTools::displayResult("Difference between current and previous joint log likelihood", TextTools::toString(currentAlternativeOverallLogL - previousAlternativeOverallLogL));
       optimizationCyclesNum = optimizationCyclesNum + 1;
-      cout << "\n\n************************************************************************************************\n\n"
-           << endl;
+      cout << "\n\n************************************************************************************************\n\n" << endl;
     } while (currentAlternativeOverallLogL - previousAlternativeOverallLogL > tolerance);
 
     /* report the optimal log likelihood and parameters of the alternative model */
@@ -704,24 +738,25 @@ int main(int args, char **argv)
          << endl;
     for (map<string, double>::iterator it = bestModelParameters.begin(); it != bestModelParameters.end(); it++)
     {
-      if ((it->first.find("Log likelihood") != std::string::npos))
+      if ((it->first.find("Log likelihood") == std::string::npos))
       {
-        ApplicationTools::displayResult(it->first, TextTools::toString(-1.0 * it->second));
-      }
-      else
-      {
-        ApplicationTools::displayResult(it->first, TextTools::toString(it->second));
+        ApplicationTools::displayResult(it->first, TextTools::toString(it->second, 15));
       }
     }
+	// now report the log likelihood value
+	cout << "\n" << endl;
+	ApplicationTools::displayResult("Character Log likelihood", TextTools::toString(-bestModelParameters["Character Log likelihood"], 15));
+	ApplicationTools::displayResult("Sequence Log likelihood", TextTools::toString(-bestModelParameters["Sequence Log likelihood"], 15));
+	ApplicationTools::displayResult("Overall Log likelihood", TextTools::toString(-bestModelParameters["Overall Log likelihood"], 15));
     // for monitoring efficacy of TraitRELAX
-    if (-1.0 * bestModelParameters["Overall Log likelihood"] == -1.0 * winningSpValues["Overall Log likelihood"])
+    if (-bestModelParameters["Overall Log likelihood"] == initialAltLogl)
     {
       cout << "Starting point (given MP history) yields the best likelihood" << endl;
     }
     ApplicationTools::displayResult("Number of optimization cycles", TextTools::toString(optimizationCyclesNum));
 
     vector<double> altLoglBySite = traitRELAXLikelihoodFunction->getLikelihoodForEachSite();
-    double alternativeLogl = -1 * traitRELAXLikelihoodFunction->getValue();
+    double alternativeLogl = -traitRELAXLikelihoodFunction->getValue();
 
     // conduct likelihood ratio test
     double LRTStatistic = 2*(alternativeLogl - nullLogl);
@@ -731,7 +766,7 @@ int main(int args, char **argv)
     }
     else
     {
-      cout << "Null hypothesis non rejected rejected" << endl;
+      cout << "Null hypothesis not rejected" << endl;
     }
     
 
