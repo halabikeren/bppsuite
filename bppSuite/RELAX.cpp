@@ -77,7 +77,7 @@ double reportScalingFactor(TreeLikelihood* tl, double origTreeLength)
 	return scalingFactor;
 }
 
-RNonHomogeneousMixedTreeLikelihood* getModelParameters(DiscreteRatesAcrossSitesTreeLikelihood* tl, MixedSubstitutionModelSet* modelSet, double origTreeLength)
+void getModelParameters(DiscreteRatesAcrossSitesTreeLikelihood* tl, MixedSubstitutionModelSet* modelSet, double origTreeLength)
 {
   ParameterList parameters;
   for (size_t m = 0; m < modelSet->getNumberOfModels(); ++m) {
@@ -95,8 +95,7 @@ RNonHomogeneousMixedTreeLikelihood* getModelParameters(DiscreteRatesAcrossSitesT
     ApplicationTools::displayResult(parameters[i].getName(), TextTools::toString(parameters[i].getValue()));
   }
   
-  double scalingFactor = reportScalingFactor(tl, origTreeLength);
-  return tl;
+  //double scalingFactor = reportScalingFactor(tl, origTreeLength);
 }
 
 VectorSiteContainer* process_alignment(Alphabet* alphabet, BppApplication bppml)
@@ -214,7 +213,7 @@ int main(int args, char** argv)
     /* compute likelihood */
     cout << "\nComputing intial log likelihood" << endl;
     ApplicationTools::displayResult("Log likelihood", TextTools::toString(-tl->getValue(), 15));
-    tl = getModelParameters(tl, model, origTreeLength); // debug - print model parameters
+    getModelParameters(tl, model, origTreeLength); // debug - print model parameters
     bppml.done();
 
     /* fit the null */
@@ -231,19 +230,20 @@ int main(int args, char** argv)
 		index = index + 1;
 		if (scaleTree >= 1)
 		{
-			OptimizationTools::optimizeTreeScale(tl, 0.000001, 1000000, ApplicationTools::message.get(), ApplicationTools::message.get(), 0);
+			OptimizationTools::optimizeTreeScale(tl, 0.000001, 1000000, ApplicationTools::message.get(), ApplicationTools::message.get(), 1);
 		}
-		reportScalingFactor(tl, origTreeLength);
+		//reportScalingFactor(tl, origTreeLength);
 		PhylogeneticsApplicationTools::optimizeParameters(tl, tl->getParameters(), bppml.getParams());
-		tl = getModelParameters(tl, model, origTreeLength); // debug - print model parameters
+		getModelParameters(tl, model, origTreeLength); // debug - print model parameters
 		ApplicationTools::displayResult("Current log likelihood", TextTools::toString(-tl->getValue(), 15));
 		prevLogLikelihood = currLogLikelihood;
 		currLogLikelihood = -tl->getValue();
 		ApplicationTools::displayResult("Current diff", TextTools::toString((currLogLikelihood-prevLogLikelihood), 15));
 	} while (currLogLikelihood - prevLogLikelihood > 0.01);
 	double nullLogl = currLogLikelihood;
-	cout << "iterative optimzation complete" << endl;
+	cout << "iterative optimization complete" << endl;
 	ApplicationTools::displayResult("Log likelihood", TextTools::toString(nullLogl, 15));
+	getModelParameters(tl, model, origTreeLength);
     bppml.done();
 
     /* fit the alternative */
@@ -261,19 +261,20 @@ int main(int args, char** argv)
 		index = index + 1;
 		if (scaleTree >= 1)
 		{
-			OptimizationTools::optimizeTreeScale(tl, 0.000001, 1000000, ApplicationTools::message.get(), ApplicationTools::message.get(), 0);
+			OptimizationTools::optimizeTreeScale(tl, 0.000001, 1000000, ApplicationTools::message.get(), ApplicationTools::message.get(), 1);
 		}
-		reportScalingFactor(tl, origTreeLength);
+		//reportScalingFactor(tl, origTreeLength);
 		PhylogeneticsApplicationTools::optimizeParameters(tl, tl->getParameters(), bppml.getParams());
-		tl = getModelParameters(tl, model, origTreeLength); // debug - print model parameters
+		getModelParameters(tl, model, origTreeLength); // debug - print model parameters
 		ApplicationTools::displayResult("Current log likelihood", TextTools::toString(-tl->getValue(), 15));
 		prevLogLikelihood = currLogLikelihood;
 		currLogLikelihood = -tl->getValue();
 		ApplicationTools::displayResult("Current diff", TextTools::toString((currLogLikelihood-prevLogLikelihood), 15));
 	} while (currLogLikelihood - prevLogLikelihood > 0.01);
-	cout << "iteraive optimzation complete" << endl;
+	cout << "iterative optimization complete" << endl;
 	double alternativeLogl = currLogLikelihood;
 	ApplicationTools::displayResult("Log likelihood", TextTools::toString(alternativeLogl, 15));
+	getModelParameters(tl, model, origTreeLength);
     bppml.done();
 
 
