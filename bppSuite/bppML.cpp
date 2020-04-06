@@ -133,19 +133,6 @@ int main(int args, char** argv)
 	
 	
     bppml.startTimer();
-	
-	// keren - set seed
-	// process seed from parameter file, if exists
-	double seed;
-	seed = ApplicationTools::getDoubleParameter("seed", bppml.getParams(), 1);
-	if (seed == 1)
-	{
-		// else, choose a ransom seed
-		seed = RandomTools::giveRandomNumberBetweenZeroAndEntry(1.0);
-	}
-	cout << "seed=" << seed << endl;
-	RandomTools::setSeed(static_cast<long>(seed));
-
 
     Alphabet* alphabet = SequenceApplicationTools::getAlphabet(bppml.getParams(), "", false);
     unique_ptr<GeneticCode> gCode;
@@ -568,7 +555,6 @@ int main(int args, char** argv)
       }
     }
     OptimizationTools::optimizeTreeScale(tl, 0.000001, 1000000, ApplicationTools::message.get(), ApplicationTools::message.get(), 0); // keren - optimize tree scale
-=======
 	// keren -add option to optimize tree scale
 	int scaleTree = ApplicationTools::getIntParameter("optimization.scale.tree", bppml.getParams(), 0);
 	if (scaleTree > 0)
