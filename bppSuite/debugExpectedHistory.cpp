@@ -294,7 +294,7 @@ int main(int args, char** argv)
     /* for stochastic mappings */
     cout << "**** Analysis based on 1000 mappings ****" << endl;
     cout << "** Sampling based analysis **" << endl;
-    traitRELAX.getParam("character.num_of_mappings")  ="100";
+    traitRELAX.getParam("character.num_of_mappings")  ="1000";
 	traitRELAX.getParam("character.use_analytic_mapping")  ="0";
     MixedSubstitutionModelSet* seqModel = setSequenceModel(&traitRELAX, seqData, calpha, mpData, charData, charModel, tree);
     JointLikelihoodFunction* traitRELAXLikelihoodFunction_0 = new JointLikelihoodFunction(&traitRELAX, tree, charData, charModel, seqData, seqModel, rDist, true);
@@ -302,7 +302,7 @@ int main(int args, char** argv)
     traitRELAXLikelihoodFunction_0->setHypothesis(JointLikelihoodFunction::Hypothesis(1));
     traitRELAXLikelihoodFunction_0->fireParameterChanged(emptyParametersList);
 
-    cout << "********************" << endl;
+    cout << "***************************************" << endl;
     cout << " ** Analytic rewards based analysis ** " << endl;
     traitRELAX.getParam("character.use_analytic_mapping")  ="1";
     traitRELAXLikelihoodFunction_0->setOptimizationScope(JointLikelihoodFunction::OptimizationScope(0)); // only compute likelihood given the gimulated parameters
