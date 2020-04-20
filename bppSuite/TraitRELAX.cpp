@@ -599,7 +599,6 @@ int main(int args, char **argv)
 
   try
   {
-	  
 
     /* process input from params file */
     BppApplication traitRELAX(args, argv, "traitRELAX");
