@@ -55,6 +55,7 @@ using namespace std;
 #include <Bpp/Numeric/AutoParameter.h>
 #include <Bpp/App/BppApplication.h>
 #include <Bpp/App/ApplicationTools.h>
+#include <Bpp/App/NumCalcApplicationTools.h>
 #include <Bpp/Io/FileTools.h>
 #include <Bpp/Text/TextTools.h>
 #include <Bpp/Text/KeyvalTools.h>
@@ -77,10 +78,10 @@ using namespace std;
 #include <Bpp/Phyl/App/PhylogeneticsApplicationTools.h>
 #include <Bpp/Phyl/OptimizationTools.h>
 #include <Bpp/Phyl/Model/SubstitutionModelSetTools.h>
-#include <Bpp/Phyl/Model/MixedSubstitutionModel.h>
+#include <Bpp/Phyl/Model/MixedTransitionModel.h>
 #include <Bpp/Phyl/Model/Protein/CoalaCore.h>
 #include <Bpp/Phyl/Model/RateDistribution/ConstantRateDistribution.h>
-#include <Bpp/Phyl/Model/FrequenciesSet/MvaFrequenciesSet.h>
+#include <Bpp/Phyl/Model/FrequencySet/MvaFrequencySet.h>
 #include <Bpp/Phyl/Io/Newick.h>
 
 using namespace bpp;
@@ -229,22 +230,23 @@ int main(int args, char** argv)
     else throw Exception("Method '" + initBrLenMethod + "' unknown for computing branch lengths.");
     ApplicationTools::displayResult("Branch lengths", cmdName);
 
+    // Output tree with ids (optional, this will stop the program) 
     string treeWIdPath = ApplicationTools::getAFilePath("output.tree_ids.file", bppml.getParams(), false, false, "", true, "none", 1);
     if (treeWIdPath != "none")
     {
       TreeTemplate<Node> ttree(*tree);
       vector<Node*> nodes = ttree.getNodes();
-      for (size_t i = 0; i < nodes.size(); i++)
+      for (auto node : nodes)
       {
-        if (nodes[i]->isLeaf())
-          nodes[i]->setName(TextTools::toString(nodes[i]->getId()) + "_" + nodes[i]->getName());
+        if (node->isLeaf())
+          node->setName(TextTools::toString(node->getId()) + "_" + node->getName());
         else
-          nodes[i]->setBranchProperty("NodeId", BppString(TextTools::toString(nodes[i]->getId())));
+          node->setBranchProperty("NodeId", BppString(TextTools::toString(node->getId())));
       }
       Newick treeWriter;
       treeWriter.enableExtendedBootstrapProperty("NodeId");
       ApplicationTools::displayResult("Writing tagged tree to", treeWIdPath);
-      treeWriter.write(ttree, treeWIdPath);
+      treeWriter.writeTree(ttree, treeWIdPath);
       delete tree;
       cout << "BppML's done." << endl;
       exit(0);
@@ -304,7 +306,7 @@ int main(int args, char** argv)
       {
         rDist = PhylogeneticsApplicationTools::getRateDistribution(bppml.getParams());
       }
-      if (dynamic_cast<MixedSubstitutionModel*>(model) == 0)
+      if (dynamic_cast<MixedTransitionModel*>(model) == 0)
         tl = new NNIHomogeneousTreeLikelihood(*tree, *sites, model, rDist, checkTree, true);
       else
         throw Exception("Topology estimation with Mixed model not supported yet, sorry :(");
@@ -335,13 +337,13 @@ int main(int args, char** argv)
         string compression = ApplicationTools::getStringParameter("likelihood.recursion_simple.compression", bppml.getParams(), "recursive", "", true, 2);
         ApplicationTools::displayResult("Likelihood data compression", compression);
         if (compression == "simple")
-          if (dynamic_cast<MixedSubstitutionModel*>(model))
+          if (dynamic_cast<MixedTransitionModel*>(model))
             tl = new RHomogeneousMixedTreeLikelihood(*tree, *sites, model, rDist, checkTree, true, false);
           else
             tl = new RHomogeneousTreeLikelihood(*tree, *sites, model, rDist, checkTree, true, false);
 
         else if (compression == "recursive")
-          if (dynamic_cast<MixedSubstitutionModel*>(model) == 0)
+          if (dynamic_cast<MixedTransitionModel*>(model) == 0)
             tl = new RHomogeneousTreeLikelihood(*tree, *sites, model, rDist, checkTree, true, true);
           else
             tl = new RHomogeneousMixedTreeLikelihood(*tree, *sites, model, rDist, checkTree, true, true);
@@ -350,7 +352,7 @@ int main(int args, char** argv)
       }
       else if (recursion == "double")
       {
-        if (dynamic_cast<MixedSubstitutionModel*>(model))
+        if (dynamic_cast<MixedTransitionModel*>(model))
           tl = new DRHomogeneousMixedTreeLikelihood(*tree, *sites, model, rDist, checkTree);
         else
           tl = new DRHomogeneousTreeLikelihood(*tree, *sites, model, rDist, checkTree);
@@ -383,30 +385,62 @@ int main(int args, char** argv)
       }
 
       bool stationarity = ApplicationTools::getBooleanParameter("nonhomogeneous.stationarity", bppml.getParams(), false, "", false, 1);
-      FrequenciesSet* rootFreqs = 0;
+      FrequencySet* rootFreqs = 0;
       std::map<std::string, std::string> aliasFreqNames;
       if (!stationarity)
       {
         
-        rootFreqs = PhylogeneticsApplicationTools::getRootFrequenciesSet(alphabet, gCode.get(), sites, bppml.getParams(), aliasFreqNames, rateFreqs);
+        rootFreqs = PhylogeneticsApplicationTools::getRootFrequencySet(alphabet, gCode.get(), sites, bppml.getParams(), aliasFreqNames, rateFreqs);
         stationarity = !rootFreqs;
         string freqDescription = ApplicationTools::getStringParameter("nonhomogeneous.root_freq", bppml.getParams(), "", "", true, 1);
         if (freqDescription == "MVAprotein")
         {
           if (dynamic_cast<CoalaCore*>(model))
           {
-            dynamic_cast<MvaFrequenciesSet*>(rootFreqs)->setModelName("MVAprotein");
-            dynamic_cast<MvaFrequenciesSet*>(rootFreqs)->initSet(dynamic_cast<CoalaCore*>(model)); 
+            dynamic_cast<MvaFrequencySet*>(rootFreqs)->setModelName("MVAprotein");
+            dynamic_cast<MvaFrequencySet*>(rootFreqs)->initSet(dynamic_cast<CoalaCore*>(model)); 
           }
           else
             throw Exception("The MVAprotein frequencies set at the root can only be used if a COaLA model is used on branches.");
         }
       }
       ApplicationTools::displayBooleanResult("Stationarity assumed", stationarity);
-   
-      vector<string> globalParameters = ApplicationTools::getVectorParameter<string>("nonhomogeneous_one_per_branch.shared_parameters", bppml.getParams(), ',', "");
-      for (size_t i = 0; i < globalParameters.size(); i++)
-        ApplicationTools::displayResult("Global parameter", globalParameters[i]);
+
+      string descGlobal = ApplicationTools::getStringParameter("nonhomogeneous_one_per_branch.shared_parameters", bppml.getParams(), "", "", true, 1);
+
+      NestedStringTokenizer nst(descGlobal,"[","]",",");
+      const deque<string>& descGlobalParameters=nst.getTokens();
+
+      map<string, vector<Vint> > globalParameters;
+      for (const auto& desc:descGlobalParameters)
+      {
+        size_t post=desc.rfind("_");
+        if (post==std::string::npos || post==desc.size()-1 || desc[post+1]!='[')
+          globalParameters[desc]={};
+        else
+        {
+          string key=desc.substr(0,post);
+          Vint sint=NumCalcApplicationTools::seqFromString(desc.substr(post+2, desc.size()-post-3));
+          if (globalParameters.find(key)==globalParameters.end())
+            globalParameters[key]=vector<Vint>(1, sint);
+          else
+            globalParameters[key].push_back(sint);
+        }
+      }
+
+      for (const auto& globpar:globalParameters)
+      {
+        ApplicationTools::displayResult("Global parameter", globpar.first);
+        if (globpar.second.size()==0)
+        {
+          string all="All nodes";
+          ApplicationTools::displayResult(" shared between nodes", all);
+        }
+        else
+          for (const auto& vint:globpar.second)
+            ApplicationTools::displayResult(" shared between nodes", VectorTools::paste(vint,","));
+      }
+      
       modelSet = SubstitutionModelSetTools::createNonHomogeneousModelSet(model, rootFreqs, tree, aliasFreqNames, globalParameters);
       model = 0;
 
@@ -730,7 +764,7 @@ int main(int args, char** argv)
           model->setFreqFromData(*sample);
         }
 
-        if (dynamic_cast<MixedSubstitutionModel*>(model) != NULL)
+        if (dynamic_cast<MixedTransitionModel*>(model) != NULL)
           throw Exception("Bootstrap estimation with Mixed model not supported yet, sorry :(");
 
         NNIHomogeneousTreeLikelihood* tlRep = new NNIHomogeneousTreeLikelihood(*initTree, *sample, model, rDist, true, false);
@@ -743,8 +777,8 @@ int main(int args, char** argv)
         tlRep = dynamic_cast<NNIHomogeneousTreeLikelihood*>(
           PhylogeneticsApplicationTools::optimizeParameters(tlRep, parametersRep, bppml.getParams(), "", true, false));
         bsTrees[i] = new TreeTemplate<Node>(tlRep->getTree());
-        if (out && i == 0) newick.write(*bsTrees[i], bsTreesPath, true);
-        if (out && i >  0) newick.write(*bsTrees[i], bsTreesPath, false);
+        if (out && i == 0) newick.writeTree(*bsTrees[i], bsTreesPath, true);
+        if (out && i >  0) newick.writeTree(*bsTrees[i], bsTreesPath, false);
         delete tlRep;
         delete sample;
       }
