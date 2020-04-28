@@ -46,14 +46,14 @@
 #include <Bpp/Phyl/App/PhylogeneticsApplicationTools.h>
 #include <Bpp/Phyl/OptimizationTools.h>
 #include <Bpp/Phyl/Model/SubstitutionModelSetTools.h>
-#include <Bpp/Phyl/Model/MixedSubstitutionModel.h>
+#include <Bpp/Phyl/Model/MixedTransitionModel.h>
 #include <Bpp/Phyl/Model/TwoParameterBinarySubstitutionModel.h>
 #include <Bpp/Phyl/Model/Protein/CoalaCore.h>
 #include <Bpp/Phyl/Model/RateDistribution/ConstantRateDistribution.h>
-#include <Bpp/Phyl/Model/FrequenciesSet/MvaFrequenciesSet.h>
-#include <Bpp/Phyl/Model/FrequenciesSet/FrequenciesSet.h>
+#include <Bpp/Phyl/Model/FrequencySet/MvaFrequencySet.h>
+#include <Bpp/Phyl/Model/FrequencySet/FrequencySet.h>
 #include <Bpp/Phyl/Io/Newick.h>
-#include <Bpp/Phyl/Io/BppOFrequenciesSetFormat.h>
+#include <Bpp/Phyl/Io/BppOFrequencySetFormat.h>
 #include <Bpp/Phyl/Mapping/StochasticMapping.h>
 #include <Bpp/Phyl/Likelihood/JointLikelihoodFunction.h>
 #include <Bpp/Phyl/Likelihood/PseudoNewtonOptimizer.h>
@@ -351,7 +351,8 @@ void optimizeAlternativeCharacterModelByGrid(map<string, double> &optimalValues,
   cout << "* Optimizng joint likelihood function with respect to character parameters using grid *\n" << endl;
 
   // set the grid bounds on the rate and kappa parameters of the character model
-  const IntervalConstraint *muBounds = dynamic_cast<const IntervalConstraint *>(characterModel->getParameter("mu").getConstraint());
+  //const IntervalConstraint *muBounds = dynamic_cast<const IntervalConstraint *>(characterModel->getParameter("mu").getConstraint());
+  std::shared_ptr<IntervalConstraint> muBounds = std::dynamic_pointer_cast<IntervalConstraint>(characterModel->getParameter("mu").getConstraint());
   double muLb = muBounds->getLowerBound() + 0.0001;
   double muUb = muBounds->getUpperBound() - 0.0001;
   double pi0Lb = 0.1;
@@ -360,7 +361,7 @@ void optimizeAlternativeCharacterModelByGrid(map<string, double> &optimalValues,
   grid.clear();
   grid.resize(2, VDouble(gridSize));
   initCharacterGrid(grid, pi0Lb, pi0Ub, muLb, muUb, gridSize);
-
+  
   // scan the grid and for each assignment of (rate, kappa), compute the joint likelihood and update the pair yieldling the best likelihood accordingly
   Parameter mu = jointlikelihoodFunction->getParameter("TwoParameterBinary.mu");
   Parameter pi0 = jointlikelihoodFunction->getParameter("TwoParameterBinary.pi0");
@@ -437,9 +438,11 @@ void optimizeAlternativeCharacterModelByOneDimBrent(map<string, double> &optimal
   characterParametersOptimizer->setVerbose(1);
   ParameterList pi0, mu;
   pi0.addParameter(jointlikelihoodFunction->getParameter("TwoParameterBinary.pi0"));
-  const IntervalConstraint *pi0Bounds = dynamic_cast<const IntervalConstraint *>(jointlikelihoodFunction->getParameter("TwoParameterBinary.pi0").getConstraint());
+  //const IntervalConstraint *pi0Bounds = dynamic_cast<const IntervalConstraint *>(jointlikelihoodFunction->getParameter("TwoParameterBinary.pi0").getConstraint());
+  std::shared_ptr<IntervalConstraint> pi0Bounds = std::dynamic_pointer_cast<IntervalConstraint>(jointlikelihoodFunction->getParameter("TwoParameterBinary.pi0").getConstraint());
   mu.addParameter(jointlikelihoodFunction->getParameter("TwoParameterBinary.mu"));
-  const IntervalConstraint *muBounds = dynamic_cast<const IntervalConstraint *>(jointlikelihoodFunction->getParameter("TwoParameterBinary.mu").getConstraint());
+  //const IntervalConstraint *muBounds = dynamic_cast<const IntervalConstraint *>(jointlikelihoodFunction->getParameter("TwoParameterBinary.mu").getConstraint());
+  std::shared_ptr<IntervalConstraint> muBounds = std::dynamic_pointer_cast<IntervalConstraint>(jointlikelihoodFunction->getParameter("TwoParameterBinary.mu").getConstraint());
   double prevLogLikelihood, currLogLikelihood;
   do
   {

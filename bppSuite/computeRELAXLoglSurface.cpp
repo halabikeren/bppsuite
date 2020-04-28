@@ -34,13 +34,13 @@
 #include <Bpp/Phyl/App/PhylogeneticsApplicationTools.h>
 #include <Bpp/Phyl/OptimizationTools.h>
 #include <Bpp/Phyl/Model/SubstitutionModelSetTools.h>
-#include <Bpp/Phyl/Model/MixedSubstitutionModel.h>
+#include <Bpp/Phyl/Model/MixedTransitionModel.h>
 #include <Bpp/Phyl/Model/Protein/CoalaCore.h>
 #include <Bpp/Phyl/Model/RateDistribution/ConstantRateDistribution.h>
-#include <Bpp/Phyl/Model/FrequenciesSet/MvaFrequenciesSet.h>
-#include <Bpp/Phyl/Model/FrequenciesSet/FrequenciesSet.h>
+#include <Bpp/Phyl/Model/FrequencySet/MvaFrequencySet.h>
+#include <Bpp/Phyl/Model/FrequencySet/FrequencySet.h>
 #include <Bpp/Phyl/Io/Newick.h>
-#include <Bpp/Phyl/Io/BppOFrequenciesSetFormat.h>
+#include <Bpp/Phyl/Io/BppOFrequencySetFormat.h>
 
 using namespace bpp;
 using namespace std;

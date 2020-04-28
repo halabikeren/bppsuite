@@ -588,18 +588,20 @@ int main(int args, char** argv)
         ApplicationTools::displayResult("Initial log likelihood", TextTools::toString(-logL, 15));
       }
     }
-    OptimizationTools::optimizeTreeScale(tl, 0.000001, 1000000, ApplicationTools::message.get(), ApplicationTools::message.get(), 0); // keren - optimize tree scale
-	// keren -add option to optimize tree scale
-	int scaleTree = ApplicationTools::getIntParameter("optimization.scale.tree", bppml.getParams(), 0);
-	if (scaleTree > 0)
+    
+	// keren - print generator matrix - start
+	cout << "row\tcol\tval\n" << endl;
+	const RowMatrix<double>& rateMat = dynamic_cast<SubstitutionModel*>(tl->getModelForSite(0, 0))->getGenerator();
+	for (size_t r = 0; r < rateMat.getNumberOfRows(); r++)
 	{
-		OptimizationTools::optimizeTreeScale(tl, 0.000001, 1000000, ApplicationTools::message.get(), ApplicationTools::message.get(), 1);
+		for (size_t c = 0; c < rateMat.getNumberOfColumns(); c++)
+		{
+			cout << r << "\t" << c << "\t" << rateMat(r,c) << "\n" << endl;
+		}
 	}
-	int scaleTreeTwice = ApplicationTools::getIntParameter("optimization.scale.tree.twice", bppml.getParams(), 0);
-		if (scaleTreeTwice > 0)
-	{
-		OptimizationTools::optimizeTreeScale(tl, 0.000001, 1000000, ApplicationTools::message.get(), ApplicationTools::message.get(), 1);
-	}
+	// keren - print generator matrix - end
+	
+	
 	tl = dynamic_cast<DiscreteRatesAcrossSitesTreeLikelihood*>(
       PhylogeneticsApplicationTools::optimizeParameters(tl, tl->getParameters(), bppml.getParams()));
 	int scaleTreeThird = ApplicationTools::getIntParameter("optimization.scale.tree.third", bppml.getParams(), 0);
@@ -609,7 +611,6 @@ int main(int args, char** argv)
 	}
 	
     tree = new TreeTemplate<Node>(tl->getTree());
-	cout << "sp1 " << endl; // keren - debug
     PhylogeneticsApplicationTools::writeTree(*tree, bppml.getParams());
 
     // Write parameters to screen:

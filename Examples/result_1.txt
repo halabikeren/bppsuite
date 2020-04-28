@@ -3,14 +3,14 @@
 ************************************************************************************************
 
 Parsing options:
-Parsing file /groups/itay_mayrose/halabikeren/TraitRELAX/sanity/traitrelax_param/0.bpp for options.
+Parsing file /groups/itay_mayrose/halabikeren/biopp/bppsuite/Examples/sanity.bpp for options.
 seed=1000
-character data file ...................: /groups/itay_mayrose/halabikeren/TraitRELAX/sanity/replicate_0/character_data/character_data.fas
+character data file ...................: ./charSanity.fas
 chatacter data format .................: FASTA file
-Input tree file .......................: /groups/itay_mayrose/halabikeren/TraitRELAX/sanity/0.nwk
+Input tree file .......................: ./sanity.nwk
 Input tree format .....................: Newick
 Alphabet type .........................: Codon(letter=DNA)
-Sequence file .........................: /groups/itay_mayrose/halabikeren/TraitRELAX/sanity/replicate_0/sequence_data/sequence_data_1.fas
+Sequence file .........................: ./seqSanity.fas
 Sequence format .......................: FASTA file
 Sites to use...........................: all
 Remove Stop Codons.....................: yes
@@ -18,13 +18,11 @@ WARNING!!! Tree has been unrooted.
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 WARNING!!! Parameter character_model.set_initial_parameters not specified. Default used instead: 1
-node name: _baseInternal_4
-node id: 4
 Number of distinct models..............: 2
 StopCodon frequencies distribution ....: quadratic
 Stationarity assumed...................: yes
 StopCodon frequencies distribution ....: quadratic
-Substitution model.....................: RELAX
+Transition model.......................: RELAX
 Frequencies Initialization for model...: None
 WARNING!!! Parameter RELAX.1_Full.theta not specified. Default used instead: 0.5
 Parameter found........................: RELAX.1_Full.theta_1=0.5
@@ -52,7 +50,7 @@ Parameter found........................: RELAX.omega1_1=1
 Parameter found........................: RELAX.omega2_1=2
 Parameter found........................: RELAX.k_1=1
 Model1 is associated to................: 5 node(s).
-Substitution model.....................: RELAX
+Transition model.......................: RELAX
 Frequencies Initialization for model...: None
 Parameter found........................: RELAX.k_2=0.2
 Model2 is associated to................: 1 node(s).
@@ -63,8 +61,8 @@ Parameter alias found..................: RELAX.p_2 -> RELAX.p_1 = 0.1
 Parameter alias found..................: RELAX.theta1_2 -> RELAX.theta1_1 = 0.5
 Parameter alias found..................: RELAX.theta2_2 -> RELAX.theta2_1 = 0.8
 Number of distinct paths...............: 2
-Site Path..............................: model1[YN98.omega_2]&model2[YN98.omega_2]
 Site Path..............................: model1[YN98.omega_1]&model2[YN98.omega_1]
+Site Path..............................: model1[YN98.omega_2]&model2[YN98.omega_2]
 Site Path Completion...................: Yes
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
@@ -277,27 +275,11 @@ Character Log likelihood..............: -2.75128456219233
 Sequence Log likelihood................: -15.120884658999
 Overall Log likelihood.................: -17.8721692211913
 traitRELAX's done. Bye.
-Total execution time: 0.000000d, 0.000000h, 1.000000m, 13.000000s.
+Total execution time: 0.000000d, 0.000000h, 1.000000m, 12.000000s.
 
 **** Alternative model fitting ****
 
 Starting point optimization: maximum parsimony partition
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -501,27 +483,11 @@ Character Log likelihood..............: -2.75128456219233
 Sequence Log likelihood................: -14.9457728993944
 Overall Log likelihood.................: -17.6970574615867
 traitRELAX's done. Bye.
-Total execution time: 0.000000d, 0.000000h, 5.000000m, 36.000000s.
+Total execution time: 0.000000d, 0.000000h, 5.000000m, 30.000000s.
 
 ** Step 1: fix sequence model parameters, optimize character model parameters **
 
 WARNING!!! Parameter optimization.character_method not specified. Default used instead: FullD(derivatives=Newton)
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -531,22 +497,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219233
 Sequence Log likelihood................: -14.9457728993944
 Overall Log likelihood.................: -17.6970574615867
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -556,22 +506,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219233
 Sequence Log likelihood................: -14.9457728993944
 Overall Log likelihood.................: -17.6970574615867
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -581,22 +515,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219252
 Sequence Log likelihood................: -14.9457728991379
 Overall Log likelihood.................: -17.6970574613304
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -606,22 +524,6 @@ TwoParameterBinary.pi0.................: 0.949999805
 Character Log likelihood...............: -2.7512847397286
 Sequence Log likelihood................: -14.9457729036983
 Overall Log likelihood.................: -17.6970576434268
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -631,22 +533,15 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219233
 Sequence Log likelihood................: -14.9457728993944
 Overall Log likelihood.................: -17.6970574615867
-Optimizing... / 1from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
+Optimizing... / 1Initializing data structure............: Done.
+Number of distinct sites...............: 1
+Initializing data structure............: Done.
+Number of distinct sites...............: 1
+TwoParameterBinary.mu..................: 0.193055454634214
+TwoParameterBinary.pi0.................: 0.95
+Character Log likelihood...............: -2.75128456219233
+Sequence Log likelihood................: -14.9457728993944
+Overall Log likelihood.................: -17.6970574615867
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -656,47 +551,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219233
 Sequence Log likelihood................: -14.9457728993944
 Overall Log likelihood.................: -17.6970574615867
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
-Initializing data structure............: Done.
-Number of distinct sites...............: 1
-Initializing data structure............: Done.
-Number of distinct sites...............: 1
-TwoParameterBinary.mu..................: 0.193055454634214
-TwoParameterBinary.pi0.................: 0.95
-Character Log likelihood...............: -2.75128456219233
-Sequence Log likelihood................: -14.9457728993944
-Overall Log likelihood.................: -17.6970574615867
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -706,22 +560,6 @@ TwoParameterBinary.pi0.................: 0.940674866286356
 Character Log likelihood...............: -2.75973800264431
 Sequence Log likelihood................: -14.9459790486831
 Overall Log likelihood.................: -17.7057170513274
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -731,22 +569,6 @@ TwoParameterBinary.pi0.................: 0.940674866286356
 Character Log likelihood...............: -2.75973800264431
 Sequence Log likelihood................: -14.9459790486831
 Overall Log likelihood.................: -17.7057170513274
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -756,22 +578,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128457817244
 Sequence Log likelihood................: -14.9457729741218
 Overall Log likelihood.................: -17.6970575522942
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -781,22 +587,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128457817244
 Sequence Log likelihood................: -14.9457729741218
 Overall Log likelihood.................: -17.6970575522942
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -806,22 +596,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219233
 Sequence Log likelihood................: -14.9457728993944
 Overall Log likelihood.................: -17.6970574615867
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -831,22 +605,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219233
 Sequence Log likelihood................: -14.9457728993944
 Overall Log likelihood.................: -17.6970574615867
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -856,22 +614,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219233
 Sequence Log likelihood................: -14.9457728993944
 Overall Log likelihood.................: -17.6970574615867
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -881,22 +623,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219233
 Sequence Log likelihood................: -14.9457728993944
 Overall Log likelihood.................: -17.6970574615867
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -906,22 +632,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456452317
 Sequence Log likelihood................: -14.9457729279378
 Overall Log likelihood.................: -17.697057492461
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -931,22 +641,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456452317
 Sequence Log likelihood................: -14.9457729279378
 Overall Log likelihood.................: -17.697057492461
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -956,22 +650,6 @@ TwoParameterBinary.pi0.................: 0.946438115871025
 Character Log likelihood...............: -2.75452226755114
 Sequence Log likelihood................: -14.9458515517447
 Overall Log likelihood.................: -17.7003738192958
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -981,22 +659,6 @@ TwoParameterBinary.pi0.................: 0.946438115871025
 Character Log likelihood...............: -2.75452226755114
 Sequence Log likelihood................: -14.9458515517447
 Overall Log likelihood.................: -17.7003738192958
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -1006,22 +668,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456277484
 Sequence Log likelihood................: -14.945772913666
 Overall Log likelihood.................: -17.6970574764408
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -1031,22 +677,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456277484
 Sequence Log likelihood................: -14.945772913666
 Overall Log likelihood.................: -17.6970574764408
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -1056,22 +686,6 @@ TwoParameterBinary.pi0.................: 0.94863948132672
 Character Log likelihood...............: -2.75252248787295
 Sequence Log likelihood................: -14.9458029287638
 Overall Log likelihood.................: -17.6983254166367
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -1081,22 +695,6 @@ TwoParameterBinary.pi0.................: 0.94863948132672
 Character Log likelihood...............: -2.75252248787295
 Sequence Log likelihood................: -14.9458029287638
 Overall Log likelihood.................: -17.6983254166367
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -1106,22 +704,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456227723
 Sequence Log likelihood................: -14.9457729048457
 Overall Log likelihood.................: -17.6970574671229
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -1131,22 +713,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456227723
 Sequence Log likelihood................: -14.9457729048457
 Overall Log likelihood.................: -17.6970574671229
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -1156,22 +722,6 @@ TwoParameterBinary.pi0.................: 0.949480328109136
 Character Log likelihood...............: -2.75175758483761
 Sequence Log likelihood................: -14.9457843676695
 Overall Log likelihood.................: -17.6975419525071
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -1181,22 +731,6 @@ TwoParameterBinary.pi0.................: 0.949480328109136
 Character Log likelihood...............: -2.75175758483761
 Sequence Log likelihood................: -14.9457843676695
 Overall Log likelihood.................: -17.6975419525071
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -1206,22 +740,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456220468
 Sequence Log likelihood................: -14.9457729014766
 Overall Log likelihood.................: -17.6970574636813
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -1231,22 +749,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456220468
 Sequence Log likelihood................: -14.9457729014766
 Overall Log likelihood.................: -17.6970574636813
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -1256,22 +758,6 @@ TwoParameterBinary.pi0.................: 0.949801503000688
 Character Log likelihood...............: -2.75146526645689
 Sequence Log likelihood................: -14.9457772796049
 Overall Log likelihood.................: -17.6972425460618
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -1281,22 +767,6 @@ TwoParameterBinary.pi0.................: 0.949801503000688
 Character Log likelihood...............: -2.75146526645689
 Sequence Log likelihood................: -14.9457772796049
 Overall Log likelihood.................: -17.6972425460618
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -1306,22 +776,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219412
 Sequence Log likelihood................: -14.9457729001897
 Overall Log likelihood.................: -17.6970574623839
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -1331,22 +785,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219412
 Sequence Log likelihood................: -14.9457729001897
 Overall Log likelihood.................: -17.6970574623839
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -1356,22 +794,6 @@ TwoParameterBinary.pi0.................: 0.949924180892928
 Character Log likelihood...............: -2.75135358881955
 Sequence Log likelihood................: -14.9457745724449
 Overall Log likelihood.................: -17.6971281612645
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -1381,22 +803,6 @@ TwoParameterBinary.pi0.................: 0.949924180892928
 Character Log likelihood...............: -2.75135358881955
 Sequence Log likelihood................: -14.9457745724449
 Overall Log likelihood.................: -17.6971281612645
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -1406,22 +812,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219259
 Sequence Log likelihood................: -14.9457728996982
 Overall Log likelihood.................: -17.6970574618908
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -1431,22 +821,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219259
 Sequence Log likelihood................: -14.9457728996982
 Overall Log likelihood.................: -17.6970574618908
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -1456,22 +830,6 @@ TwoParameterBinary.pi0.................: 0.949971039678095
 Character Log likelihood...............: -2.75131092856301
 Sequence Log likelihood................: -14.9457735384369
 Overall Log likelihood.................: -17.6970844669999
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -1481,22 +839,6 @@ TwoParameterBinary.pi0.................: 0.949971039678095
 Character Log likelihood...............: -2.75131092856301
 Sequence Log likelihood................: -14.9457735384369
 Overall Log likelihood.................: -17.6970844669999
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -1506,22 +848,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219237
 Sequence Log likelihood................: -14.9457728995104
 Overall Log likelihood.................: -17.6970574617028
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -1531,22 +857,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219237
 Sequence Log likelihood................: -14.9457728995104
 Overall Log likelihood.................: -17.6970574617028
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -1556,22 +866,6 @@ TwoParameterBinary.pi0.................: 0.949988938141357
 Character Log likelihood...............: -2.75129463332929
 Sequence Log likelihood................: -14.945773143486
 Overall Log likelihood.................: -17.6970677768153
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -1581,22 +875,6 @@ TwoParameterBinary.pi0.................: 0.949988938141357
 Character Log likelihood...............: -2.75129463332929
 Sequence Log likelihood................: -14.945773143486
 Overall Log likelihood.................: -17.6970677768153
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -1606,22 +884,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219233
 Sequence Log likelihood................: -14.9457728994387
 Overall Log likelihood.................: -17.6970574616311
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -1631,22 +893,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219233
 Sequence Log likelihood................: -14.9457728994387
 Overall Log likelihood.................: -17.6970574616311
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -1656,22 +902,6 @@ TwoParameterBinary.pi0.................: 0.949995774745977
 Character Log likelihood...............: -2.75128840903594
 Sequence Log likelihood................: -14.945772992629
 Overall Log likelihood.................: -17.6970614016649
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -1681,22 +911,6 @@ TwoParameterBinary.pi0.................: 0.949995774745977
 Character Log likelihood...............: -2.75128840903594
 Sequence Log likelihood................: -14.945772992629
 Overall Log likelihood.................: -17.6970614016649
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -1706,22 +920,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219233
 Sequence Log likelihood................: -14.9457728994113
 Overall Log likelihood.................: -17.6970574616037
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -1731,22 +929,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219233
 Sequence Log likelihood................: -14.9457728994113
 Overall Log likelihood.................: -17.6970574616037
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -1756,22 +938,6 @@ TwoParameterBinary.pi0.................: 0.949998386096574
 Character Log likelihood...............: -2.75128603155753
 Sequence Log likelihood................: -14.9457729350068
 Overall Log likelihood.................: -17.6970589665644
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -1781,22 +947,6 @@ TwoParameterBinary.pi0.................: 0.949998386096574
 Character Log likelihood...............: -2.75128603155753
 Sequence Log likelihood................: -14.9457729350068
 Overall Log likelihood.................: -17.6970589665644
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -1806,22 +956,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219233
 Sequence Log likelihood................: -14.9457728994009
 Overall Log likelihood.................: -17.6970574615932
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -1831,22 +965,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219233
 Sequence Log likelihood................: -14.9457728994009
 Overall Log likelihood.................: -17.6970574615932
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -1856,22 +974,6 @@ TwoParameterBinary.pi0.................: 0.949999383543746
 Character Log likelihood...............: -2.75128512344014
 Sequence Log likelihood................: -14.9457729129971
 Overall Log likelihood.................: -17.6970580364373
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -1881,22 +983,6 @@ TwoParameterBinary.pi0.................: 0.949999383543746
 Character Log likelihood...............: -2.75128512344014
 Sequence Log likelihood................: -14.9457729129971
 Overall Log likelihood.................: -17.6970580364373
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -1906,22 +992,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219233
 Sequence Log likelihood................: -14.9457728993969
 Overall Log likelihood.................: -17.6970574615892
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -1931,22 +1001,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219233
 Sequence Log likelihood................: -14.9457728993969
 Overall Log likelihood.................: -17.6970574615892
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -1956,22 +1010,6 @@ TwoParameterBinary.pi0.................: 0.949999764534664
 Character Log likelihood...............: -2.75128477656995
 Sequence Log likelihood................: -14.9457729045902
 Overall Log likelihood.................: -17.6970576811601
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -1981,22 +1019,6 @@ TwoParameterBinary.pi0.................: 0.949999764534664
 Character Log likelihood...............: -2.75128477656995
 Sequence Log likelihood................: -14.9457729045902
 Overall Log likelihood.................: -17.6970576811601
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -2006,22 +1028,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219233
 Sequence Log likelihood................: -14.9457728993954
 Overall Log likelihood.................: -17.6970574615877
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -2031,22 +1037,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219233
 Sequence Log likelihood................: -14.9457728993954
 Overall Log likelihood.................: -17.6970574615877
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -2056,22 +1046,6 @@ TwoParameterBinary.pi0.................: 0.949999910060245
 Character Log likelihood...............: -2.7512846440773
 Sequence Log likelihood................: -14.945772901379
 Overall Log likelihood.................: -17.6970575454563
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -2081,22 +1055,6 @@ TwoParameterBinary.pi0.................: 0.949999910060245
 Character Log likelihood...............: -2.7512846440773
 Sequence Log likelihood................: -14.945772901379
 Overall Log likelihood.................: -17.6970575454563
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -2106,22 +1064,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219233
 Sequence Log likelihood................: -14.9457728993948
 Overall Log likelihood.................: -17.6970574615871
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -2131,22 +1073,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219233
 Sequence Log likelihood................: -14.9457728993948
 Overall Log likelihood.................: -17.6970574615871
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -2156,22 +1082,6 @@ TwoParameterBinary.pi0.................: 0.94999996564607
 Character Log likelihood...............: -2.75128459346961
 Sequence Log likelihood................: -14.9457729001525
 Overall Log likelihood.................: -17.6970574936221
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -2181,22 +1091,6 @@ TwoParameterBinary.pi0.................: 0.94999996564607
 Character Log likelihood...............: -2.75128459346961
 Sequence Log likelihood................: -14.9457729001525
 Overall Log likelihood.................: -17.6970574936221
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -2206,22 +1100,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219233
 Sequence Log likelihood................: -14.9457728993946
 Overall Log likelihood.................: -17.6970574615869
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -2231,22 +1109,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219233
 Sequence Log likelihood................: -14.9457728993946
 Overall Log likelihood.................: -17.6970574615869
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -2256,22 +1118,6 @@ TwoParameterBinary.pi0.................: 0.949999986877966
 Character Log likelihood...............: -2.75128457413919
 Sequence Log likelihood................: -14.945772899684
 Overall Log likelihood.................: -17.6970574738232
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -2281,22 +1127,6 @@ TwoParameterBinary.pi0.................: 0.949999986877966
 Character Log likelihood...............: -2.75128457413919
 Sequence Log likelihood................: -14.945772899684
 Overall Log likelihood.................: -17.6970574738232
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -2306,22 +1136,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219233
 Sequence Log likelihood................: -14.9457728993945
 Overall Log likelihood.................: -17.6970574615868
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -2331,22 +1145,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219233
 Sequence Log likelihood................: -14.9457728993945
 Overall Log likelihood.................: -17.6970574615868
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -2356,22 +1154,6 @@ TwoParameterBinary.pi0.................: 0.949999994987829
 Character Log likelihood...............: -2.75128456675562
 Sequence Log likelihood................: -14.945772899505
 Overall Log likelihood.................: -17.6970574662606
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -2381,22 +1163,6 @@ TwoParameterBinary.pi0.................: 0.949999994987829
 Character Log likelihood...............: -2.75128456675562
 Sequence Log likelihood................: -14.945772899505
 Overall Log likelihood.................: -17.6970574662606
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -2406,22 +1172,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219233
 Sequence Log likelihood................: -14.9457728993944
 Overall Log likelihood.................: -17.6970574615868
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -2431,22 +1181,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219233
 Sequence Log likelihood................: -14.9457728993944
 Overall Log likelihood.................: -17.6970574615868
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -2456,22 +1190,6 @@ TwoParameterBinary.pi0.................: 0.949999998085521
 Character Log likelihood...............: -2.75128456393535
 Sequence Log likelihood................: -14.9457728994367
 Overall Log likelihood.................: -17.697057463372
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -2481,22 +1199,6 @@ TwoParameterBinary.pi0.................: 0.949999998085521
 Character Log likelihood...............: -2.75128456393535
 Sequence Log likelihood................: -14.9457728994367
 Overall Log likelihood.................: -17.697057463372
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -2506,22 +1208,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219233
 Sequence Log likelihood................: -14.9457728993944
 Overall Log likelihood.................: -17.6970574615867
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -2531,22 +1217,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219233
 Sequence Log likelihood................: -14.9457728993944
 Overall Log likelihood.................: -17.6970574615867
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -2556,22 +1226,6 @@ TwoParameterBinary.pi0.................: 0.949999999268734
 Character Log likelihood...............: -2.75128456285811
 Sequence Log likelihood................: -14.9457728994105
 Overall Log likelihood.................: -17.6970574622687
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -2581,22 +1235,6 @@ TwoParameterBinary.pi0.................: 0.949999999268734
 Character Log likelihood...............: -2.75128456285811
 Sequence Log likelihood................: -14.9457728994105
 Overall Log likelihood.................: -17.6970574622687
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -2606,22 +1244,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219233
 Sequence Log likelihood................: -14.9457728993944
 Overall Log likelihood.................: -17.6970574615867
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -2631,22 +1253,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219233
 Sequence Log likelihood................: -14.9457728993944
 Overall Log likelihood.................: -17.6970574615867
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -2656,22 +1262,6 @@ TwoParameterBinary.pi0.................: 0.949999999720681
 Character Log likelihood...............: -2.75128456244663
 Sequence Log likelihood................: -14.9457728994006
 Overall Log likelihood.................: -17.6970574618472
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -2681,22 +1271,6 @@ TwoParameterBinary.pi0.................: 0.949999999720681
 Character Log likelihood...............: -2.75128456244663
 Sequence Log likelihood................: -14.9457728994006
 Overall Log likelihood.................: -17.6970574618472
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -2706,22 +1280,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219233
 Sequence Log likelihood................: -14.9457728993944
 Overall Log likelihood.................: -17.6970574615867
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -2731,22 +1289,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219233
 Sequence Log likelihood................: -14.9457728993944
 Overall Log likelihood.................: -17.6970574615867
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -2756,22 +1298,6 @@ TwoParameterBinary.pi0.................: 0.94999999989331
 Character Log likelihood...............: -2.75128456228946
 Sequence Log likelihood................: -14.9457728993968
 Overall Log likelihood.................: -17.6970574616862
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -2781,22 +1307,6 @@ TwoParameterBinary.pi0.................: 0.94999999989331
 Character Log likelihood...............: -2.75128456228946
 Sequence Log likelihood................: -14.9457728993968
 Overall Log likelihood.................: -17.6970574616862
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -2806,22 +1316,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219233
 Sequence Log likelihood................: -14.9457728993944
 Overall Log likelihood.................: -17.6970574615867
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -2831,22 +1325,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219233
 Sequence Log likelihood................: -14.9457728993944
 Overall Log likelihood.................: -17.6970574615867
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -2856,22 +1334,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219233
 Sequence Log likelihood................: -14.9457728993944
 Overall Log likelihood.................: -17.6970574615867
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -2881,22 +1343,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219233
 Sequence Log likelihood................: -14.9457728993944
 Overall Log likelihood.................: -17.6970574615867
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -2906,22 +1352,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219233
 Sequence Log likelihood................: -14.9457728993944
 Overall Log likelihood.................: -17.6970574615867
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -2931,22 +1361,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219233
 Sequence Log likelihood................: -14.9457728993944
 Overall Log likelihood.................: -17.6970574615867
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -2956,22 +1370,6 @@ TwoParameterBinary.pi0.................: 0.95
 Character Log likelihood...............: -2.75128456219252
 Sequence Log likelihood................: -14.9457728991379
 Overall Log likelihood.................: -17.6970574613304
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -2981,22 +1379,6 @@ TwoParameterBinary.pi0.................: 0.949999805
 Character Log likelihood...............: -2.7512847397286
 Sequence Log likelihood................: -14.9457729036983
 Overall Log likelihood.................: -17.6970576434268
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -3013,26 +1395,10 @@ Overall Log likelihood.................: -17.6970574615867
 Mu.....................................: 0.193055
 Pi0....................................: 0.95
 traitRELAX's done. Bye.
-Total execution time: 0.000000d, 0.000000h, 2.000000m, 34.000000s.
+Total execution time: 0.000000d, 0.000000h, 2.000000m, 32.000000s.
 
 ** Step 2: fix character model parameters, optimize sequence model parameters **
 
-from stochastic mapping
-node_id	state	probability
-0	0	1.000000
-0	1	0.000000
-1	0	1.000000
-1	1	0.000000
-2	0	0.999862
-2	1	0.000138
-3	0	1.000000
-3	1	0.000000
-4	0	0.999860
-4	1	0.000140
-5	0	0.000000
-5	1	1.000000
-6	0	0.939238
-6	1	0.060762
 Initializing data structure............: Done.
 Number of distinct sites...............: 1
 Initializing data structure............: Done.
@@ -3157,7 +1523,7 @@ Character Log likelihood..............: -2.75128456219233
 Sequence Log likelihood................: -14.945772899083
 Overall Log likelihood.................: -17.6970574612754
 traitRELAX's done. Bye.
-Total execution time: 0.000000d, 0.000000h, 1.000000m, 6.000000s.
+Total execution time: 0.000000d, 0.000000h, 1.000000m, 5.000000s.
 Optimization cycle.....................: 1
 Difference between current and previous: 3.11374e-10
 
@@ -3201,4 +1567,4 @@ Joint log likelihood ratio by site
 site	log(LR)
 0	1.191379
 traitRELAX's done. Bye.
-Total execution time: 0.000000d, 0.000000h, 1.000000m, 6.000000s.
+Total execution time: 0.000000d, 0.000000h, 1.000000m, 5.000000s.
